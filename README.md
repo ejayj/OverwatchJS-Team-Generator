@@ -20,3 +20,11 @@ deadline: Saturday
 
 Next project:
 - tonems dispatch website
+- Overwatch script (python version)
+- Switch spotify api to django, and script to flask?
+-------------------------------------------------------
+- Fix minute issues/bugs in code in this order:
+- Overwatch JS, Discord bot, Overwatch Python, Ejay Codies, Python Spotify API
+--------------------------------------------------------
+- Create portfolio website
+- Apply to places
