@@ -28,3 +28,5 @@ Next project:
 --------------------------------------------------------
 - Create portfolio website
 - Apply to places (should i have something speciifc in my github repo's for applications?)
+========
+- Then build a game!!!
