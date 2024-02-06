@@ -27,4 +27,4 @@ Next project:
 - Overwatch JS, Discord bot, Overwatch Python, Ejay Codies, Python Spotify API
 --------------------------------------------------------
 - Create portfolio website
-- Apply to places
+- Apply to places (should i have something speciifc in my github repo's for applications?)
