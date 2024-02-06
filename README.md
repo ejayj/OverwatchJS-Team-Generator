@@ -19,7 +19,7 @@ Next Todo:
 deadline: Saturday
 
 Next project:
-- tonems dispatch website
+- tonems dispatch website (php? how does php talk to json for save data)
 - Overwatch script (python version)
 - Switch spotify api to django, and script to flask?
 -------------------------------------------------------
