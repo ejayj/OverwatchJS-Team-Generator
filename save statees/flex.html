@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overwatch Team Randomizer</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+
+      .flex-container {
+        display: flex;
+        flex-direction: column; /* Change direction to a column */
+    }
+
+    .flex-container2 {
+      display: flex;
+      flex-direction: column; /* Change direction to a column */
+      align-items: flex-start; /* Align items to the start of the cross axis; dlete this for row */
+  }
+
+    .flex-container3 {
+    display: flex;
+    flex-direction: column; /* Change direction to a column */
+    align-items: flex-end; /* Align items to the start of the cross axis; dlete this for row */
+}
+
+      .flex-start {
+        display: flex;
+        flex-direction: column; /* Change direction to a column */
+        align-items: flex-start; /* Align items to the start of the cross axis; dlete this for row */
+    }
+
+    .flex-end {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end; /* Align items to the start of the cross axis */
+    }
+    
+    .flex-item {
+        padding: 20px;
+        text-align: center;
+    }
+      </style>
+  </head>
+  <body style="background-color: rgb(45, 48, 67)">
+    <div class="flex-container">
+        <div class="flex-item" style="background-color: #3498db;">Item 1</div>
+    </div>
+    <div class="flex-container2">
+      <div class="flex-item" style="background-color: #e74c3c;">Item 2</div>
+  </div>
+  <div class="flex-container3">
+    <div class="flex-item" style="background-color: #27ae60;">Item 3</div>
+</div>
+</body>
+</html>
+
+
+<!-- Add bulma, and structure divs/columns-->

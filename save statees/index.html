@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overwatch Team Randomizer</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+      .header { grid-area: header; 
+        height: 50px;
+        
+      }
+      .config { grid-area: config; }
+      .team1 { grid-area: team1; }
+      .team2 { grid-area: team2; }
+      .playerpool { grid-area: playerpool; }
+      .player { grid-area: player; 
+        height: 200px;}
+      .rejects { grid-area: rejects;
+      height: 200px;
+     }
+      .footer { grid-area: footer; }
+      
+      
+      .grid-container {
+        display: grid;
+        grid-template-areas:
+          'header header header header header header'
+          'config team1 team1 team1 team1 playerpool'
+          'config team2 team2 team2 team2 playerpool'
+          'rejects player player player player playerpool'
+          'footer footer footer footer footer footer';
+        gap: 10px;
+        background-color: #2196F3;
+        padding: 10px;
+      }
+      
+      .grid-container > div {
+        background-color: rgba(255, 255, 255, 0.8);
+        text-align: center;
+        padding: 20px 0;
+        font-size: 30px;
+      }
+      
+      </style>
+  </head>
+  <body>
+    <div class="grid-container">
+        <div class="header" style="background-color:rgb(105, 175, 244)">
+          <p> Header 1</p>
+        </div>
+
+        <div class="team1" style="background-color:rgb(105, 175, 244)">
+          <p> Team 1 Box</p>
+        </div>
+        <div class="team2" style="background-color:rgb(105, 175, 244)">
+          <p> Team 2 Box</p>
+        </div>
+
+        
+        <div class="playerpool" style="background-color:rgb(105, 175, 244)">
+          <p> Player Pool</p>
+        </div>
+
+        <!-- SIDE BARS -->
+        <div class="config" style="background-color:rgb(105, 175, 244)">
+          <p> Config</p>
+        </div>
+
+        <div class="rejects" style="background-color:rgb(105, 175, 244)">
+          <p> Rejects Box</p>
+        </div>
+
+        <div class="player" style="background-color:rgb(105, 175, 244)">
+          <p> Add Player Box</p>
+        </div>
+
+
+        <div class="footer" style="background-color:rgb(105, 175, 244)">
+          <p> Footer 1</p>
+        </div>
+    </div>
+  </body>
+</html>
+
+
+<!-- Add bulma, and structure divs/columns-->
