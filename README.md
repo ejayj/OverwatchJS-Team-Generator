@@ -16,10 +16,10 @@ Next Todo:
 - Stylings
 - Publish on render or any other site that will host
 
-deadline: Saturday
+
 
 Next project:
-- tonems dispatch website (php? how does php talk to json for save data)
+ dispatch website (php? how does php talk to json for save data) (tnvac)
 - Overwatch script (python version)
 - Switch spotify api to django, and script to flask?
 -------------------------------------------------------
