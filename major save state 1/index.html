@@ -13,12 +13,6 @@
 <!-- have auto save rememebr ip and brign up history -->
 <!-- history,a ccount and etc can be handled from navbar-->
 
-<!-- add lock button to teams and player function-->
-<!-- add "generate teams" button-->
-<!-- get config settings to work, figure out save states and etc.-->
-<!-- once functionality is finished, clean file of notes and begin focusing on styling-->
-<!-- see end javascript note-->
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,6 +21,86 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <nav></nav>    
+
+    <style>
+      input[type="checkbox"][id^="cb"] {
+        display: none;
+      }
+      
+      label {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      
+      label::before {
+        background-color: white;
+        color: white;
+        content: " ";
+        display: block;
+        border-radius: 50%;
+        border: 1px solid blue;
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+        line-height: 28px;
+        transition-duration: 0.4s;
+        transform: scale(0);
+      }
+      
+      label img {
+        height: 20px;
+        width: 20px;
+        transition-duration: 0.2s;
+        transform-origin: 50% 50%;
+      }
+      
+      :checked+label img {
+        transform: scale(0.9);
+        box-shadow: 0 0 5px #0055fe;
+        z-index: -1;
+      }
+
+        .popup {
+          position: relative;
+          display: inline-block;
+          /* text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden; */
+          align-content: stretch; 
+        }
+        
+        .popup-content {
+          display: none;
+          
+          background-color: rgb(247, 246, 246);
+          border-radius: 3px;
+          box-shadow: 2px 2px;
+          
+          position: absolute;
+          margin-top: 1px;
+          font: 10px;
+          line-height: 35px;
+          bottom: 100%; /* added this attribute */
+          text-align: center;
+          align-content: stretch; 
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          
+        }
+        
+        .popup:hover .popup-content {
+          display: block;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -42,7 +116,7 @@
                 
                 <div class="dropdown-trigger">
                   <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
-                    <span><img width="30px" src="./images/hamburger.png"></span>
+                    <span><img width="30px" src="hamburger.png"></span>
                     <span class="icon is-small">
                       <i class="fas fa-angle-down" aria-hidden="true"></i>
                     </span>
@@ -137,24 +211,24 @@
                           <div style="padding:5px;" class="columns is-centered is-mobile">
  
                             <div id="t1p1" style="border:1px solid black;" class="auto  column">
-                              <div id="t1p1icon"> <img src="./images/tank.png" width="20px" height="20px"></div>
+                              <div id="t1p1icon"> <img src="tank.png" width="20px" height="20px"></div>
                               Player 1
                             </div>
 
                             <div id="t1p2" style="border:1px solid black;" class="auto column">
-                              <div id="t1p2icon"><img src="./images/dps.png" width="20px" height="20px"></div>
+                              <div id="t1p2icon"><img src="dps.png" width="20px" height="20px"></div>
                               Player 2
                             </div>
                             <div id="t1p3" style="border:1px solid black;" class="auto column">
-                              <div id="t1p3icon"><img src="./images/dps.png" width="20px" height="20px"></div>
+                              <div id="t1p3icon"><img src="dps.png" width="20px" height="20px"></div>
                               Player 3
                             </div>
                             <div id="t1p4" style="border:1px solid black;" class="auto column">
-                              <div id="t1p4icon"><img src="./images/support.png" width="20px" height="20px"></div>
+                              <div id="t1p4icon"><img src="support.png" width="20px" height="20px"></div>
                               Player 4
                             </div>
                             <div id="t1p5" style="border:1px solid black;" class="auto column">
-                              <div id="t1p5icon"><img src="./images/support.png" width="20px" height="20px"></div>
+                              <div id="t1p5icon"><img src="support.png" width="20px" height="20px"></div>
                                 Player 5
                               </div>
                         </div>
@@ -168,24 +242,24 @@
                           <div style="padding:5px;" class="columns is-centered is-mobile">
  
                             <div id="t2p1" style="border:1px solid black;" class="auto  column">
-                              <div id="t2p1icon"> <img src="./images/tank.png" width="20px" height="20px"></div>
+                              <div id="t2p1icon"> <img src="tank.png" width="20px" height="20px"></div>
                               Player 1
                             </div>
 
                             <div id="t2p2" style="border:1px solid black;" class="auto column">
-                              <div id="t2p2icon"><img src="./images/dps.png" width="20px" height="20px"></div>
+                              <div id="t2p2icon"><img src="dps.png" width="20px" height="20px"></div>
                               Player 2
                             </div>
                             <div id="t2p3" style="border:1px solid black;" class="auto column">
-                              <div id="t2p3icon"><img src="./images/dps.png" width="20px" height="20px"></div>
+                              <div id="t2p3icon"><img src="dps.png" width="20px" height="20px"></div>
                               Player 3
                             </div>
                             <div id="t2p4" style="border:1px solid black;" class="auto column">
-                              <div id="t2p4icon"><img src="./images/support.png" width="20px" height="20px"></div>
+                              <div id="t2p4icon"><img src="support.png" width="20px" height="20px"></div>
                               Player 4
                             </div>
                             <div id="t2p5" style="border:1px solid black;" class="auto column">
-                              <div id="t2p5icon"><img src="./images/support.png" width="20px" height="20px"></div>
+                              <div id="t2p5icon"><img src="support.png" width="20px" height="20px"></div>
                                 Player 5
                               </div>
                         </div>
@@ -216,10 +290,10 @@
                                     <input id="name" class="input is-rounded" type="text" placeholder="Text input"> 
                                     <div style="float:left;" class="column">
                                       <div style="display: inline-block; margin-top: 2px;">
-                                        <input type="checkbox" id="cb1" /><label for="cb1"><img width="20px" height="20px" src="./images/tank.png" /></label>
-                                        <input type="checkbox" id="cb2" /><label for="cb2"><img width="20px" height="20px" src="./images/dps.png" /></label>
-                                        <input type="checkbox" id="cb3" /><label for="cb3"><img width="20px" height="20px" src="./images/support.png" /></label>
-                                        <input type="checkbox" id="cb4" /><label for="cb4"><img width="20px" height="20px" src="./images/all.png" /></label>
+                                        <input type="checkbox" id="cb1" /><label for="cb1"><img width="20px" height="20px" src="tank.png" /></label>
+                                        <input type="checkbox" id="cb2" /><label for="cb2"><img width="20px" height="20px" src="dps.png" /></label>
+                                        <input type="checkbox" id="cb3" /><label for="cb3"><img width="20px" height="20px" src="support.png" /></label>
+                                        <input type="checkbox" id="cb4" /><label for="cb4"><img width="20px" height="20px" src="all.png" /></label>
                                       </div>
                                       <div style="width:70px; padding: 0; margin-top: px;" class="select is-small"><select id="rank">
                                         <option>Rank</option>

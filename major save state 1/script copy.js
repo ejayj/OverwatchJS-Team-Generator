@@ -1,8 +1,4 @@
-//variables:
-const tank_img = '<img width="10px" height="10px" src="./images/tank.png" />';
-const dps_img = '<img width="10px" height="10px" src="./images/dps.png" />';
-const support_img = '<img width="10px" height="10px" src="./images/support.png" />';
-const all_img = '<img width="10px" height="10px" src="./images/all.png" />';
+let addPlayerForm = document.getElementById("addPlayerForm");
 
 //search for len(), count(), && remove() functions for arrays
 class Team {
@@ -293,7 +289,7 @@ class Team {
       console.log("Attempted to force add null player?")
       return false;
     }
-    if (this.isteamfull()==false) { //if the team isn't full, allow player to be queud for every role
+    if (this.isteamfull()=false) { //if the team isn't full, allow player to be queud for every role
       this.players.push(PlayerName) //MAKE SURE THIS WORKS?
       this.filledroles.push("Tank") //set tank role to filled! we can   only have 1 tank in a 5v5!
       this.achievedroles.push("Tank") //takes note we have an extra   player of this type available
@@ -587,24 +583,6 @@ function add_to_playerpool(...Players) {
   //AT END OF FOR LOOP, I SHOULD SAVE MASTER PLAYERPOOL TO A FILE
 }
 
-function remove_from_playerpool(playername) {
-
-  for (let i = 0; i<playerpool.length;i++) {
-    //console.log(playerpool[i]["name"]);
-
-    if(playerpool[i]["name"]==playername) {
-      playerpool.splice(i, 1); //TODO: Make error to where you cant add two of the same names
-    }
-  }
-  
-  displayplayerpool();
-}
-
-function clear_playerpool() {
-  playerpool =[];
-  displayplayerpool();
-}
-
 
 function choose_random_player(){  // maybe make a clause, if number has already been chosen, dont choose it again for this instance? theres w ayt od ot his
     //playerpool=playerpool.split(',');
@@ -844,7 +822,7 @@ function createteams2(teamamount, size=5, rolelock=true){
 
 
 //************ MAIN FUNCTION CALLS BELOW */
-// //******
+//add_to_playerpool(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12) //******
 
 //console.log(masterplayerpool)
 //printteam(create_team(1,5))//this is not wokring right so...
@@ -852,7 +830,7 @@ function createteams2(teamamount, size=5, rolelock=true){
 
 
 
-function addnewplayer(name,roles=["Tank","DPS", "Support"],rank=0.0) {
+function addnewplayer(name,roles=["Tank","DPS", "Support"],rank=0) {
 
 //split up roles, for roles in roles, make it a tuple?
 if (roles=="all"){
@@ -862,192 +840,25 @@ if (roles=="all"){
   //put in touple
 }
 
-if (rank == "Rank" || rank == 0.0) { //if no rank, give random value
-  rank = "None";
-}
-
   //const player = new Player("Ejay", ["Tank","DPS", "Support"], 2) 
   const player = new Player(name, roles, rank) 
   add_to_playerpool(player)
 }
 
+addPlayerForm.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-function validateAddPlayerform() {
-  let name = document.forms["addPlayerForm"]["name"].value;
-  let rank = document.forms["addPlayerForm"]["rank"].value;
-  if (name == "") {
-    alert("Name must be filled out");
-    return false;
-  }
+  // handle submit
+  console.log("we reach here")
+  //window.alert("1")
+  alert("2")
+});
 
-  if (rank == "Rank" || rank == 0.0) { //if no rank, give random value
-    rank = "None";
-  }
-  
-  // if (role lock = ON ) && all checkboxes are blank, error alert: need to enter a role of turn of roles in the config section
-  //same thing for rank 
-
-  //set roles to an array, and iterate through to see which is true
-  let roles=[];
-  let tank = document.forms["addPlayerForm"]["cb1"].checked;
-  let dps = document.forms["addPlayerForm"]["cb2"].checked;
-  let support = document.forms["addPlayerForm"]["cb3"].checked;
-  let all = document.forms["addPlayerForm"]["cb4"].checked;
-  temproles=[tank,dps,support,all];
-  //alert(temproles)
-
-  for (let i = 0; i<temproles.length;i++) {
-    if(temproles[i]) {
-      switch (i) {
-        case 0:
-          roles.push("Tank")
-          break;
-        case 1:
-          roles.push("DPS")
-          break;
-        case 2:
-          roles.push("Support")
-          break;
-        case 3:
-          roles.push("All")
-          break;
-      }
-    }
-
-    if(i==4 && (roles.length==3 || roles.length==0)) { // on last loop, if all roles are queued or none are, assign all role
-      roles=["All"];
-      console.log('we reach here???')
-    }
-  }
-
-    if (roles.length==0) {
-      roles=["All"];
-    }
-
-  //let words = document.getElementById("playerpool")
-  //words.innerHTML="peepee" //error, this does not display peepee after page loads. ill have to read/save these valuessomewhere? run a server?
-  //alert('player: '+name+' roles: '+roles+ ' rank '+rank)
-  let player = new Player(name, roles, rank) 
-  //add_to_playerpool(player)
-  add_to_playerpool(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12)
-  displayplayerpool()
-  //printdata
-  clearForm()
+function itworks() {
+  alert("hi")
+  window.alert("hello")
+  console.log("something")
 }
-
-function printdata() {
-
-  displayplayerpool();
-  displayteams();
-  displayrejects();
-  
-}
-
-function displayplayerpool() {
-  let writing=""
-
-  for (let i = 0; i<playerpool.length;i++) {
-    let player=playerpool[i]["name"]
-    let playervar="'"+player+"'" //var to pass remove from playerpool button 
-    writing=writing+'<a style="color:red;" onclick="remove_from_playerpool('+playervar+')"> x </a><div class="popup"><span>'+player+'</span> <div class="popup-content"><p> Rank: '+playerpool[i]["rank"]+'<br></p></div></div> '+roles_to_img(playerpool[i]["role"])+'</div><br>';
-
-
-    //if ranks are off, dont show ranks on scroll
-  }
-  //if rank is on, append rank
-  //if ra
-
-  //if roles are on, append role
-
-  //write to doc as <td><tr> etc.
-  let words = document.getElementById("playerpool")
-    words.innerHTML=writing
-}
-
-
-function roles_to_img(roles) {  
-  let images='';
-
-  for (let i = 0; i<roles.length;i++) {
-
-    //if there are three roles, just set it to all
-    if (roles.length==3) {
-      return all_img;
-      
-    }
-
-    switch(roles[i]) {
-      case "Tank":
-        images=images+tank_img;
-        break;
-      case "DPS":
-        images=images+dps_img;
-        break;
-      case "Support":
-        images=images+support_img;
-        break;
-      case "A": //this breaks the function for some reason
-        console.log('we reach here:')
-        console.log(roles[i])
-        images=''; //destroy whatever roles are in images
-        images=images+all_img;
-        break;
-      default:
-        images=''; //destroy whatever roles are in images
-        images=images+all_img;
-        break;
-    }
-//new problem, it keeps setting all of the player roles to 'ALL'
-
-    //console.log(images)
-    //images=images+roles[i]+","
-  }
-  return images;
-  //alert(writing)
-
-}
-
-function displayrejects() {
-  let writing=""
-
-  for (let i = 0; i<rejects.length;i++) {
-    let player=rejects[i]["name"]
-    let playervar="'"+player+"'" //var to pass remove from playerpool button 
-    writing=writing+'<a style="color:red;" onclick="remove_from_playerpool('+playervar+')"> x </a><div class="popup"><span>'+player+'</span> <div class="popup-content"><p> Rank: '+rejects[i]["rank"]+'<br></p></div></div> '+roles_to_img(rejects[i]["role"])+'</div><br>';
-
-
-    //if ranks are off, dont show ranks on scroll
-  }
-  //if rank is on, append rank
-  //if ra
-
-  //if roles are on, append role
-
-  //write to doc as <td><tr> etc.
-  let words = document.getElementById("rejects")
-    words.innerHTML=writing
-}
-
-
-//delete from playerpool
-
-//check data stuff
-
-function clearForm() { //
-  document.getElementById("addPlayerForm").reset();
-}
-
-function clearPlayerPool() {
-  playerpool=[]; //empty player pool
-  document.getElementById("playerpool").innerHTML=""; //reset writing display
-}
-
-function clearRejects() {
-  rejects=[]; //empty player pool
-  document.getElementById("rejects").innerHTML="None"; //reset writing display
-}
-
-//displayplayerpool()
 //eerytime it adds new player, print the list from add new playters into that div 
 
 //addnewplayer('ejay')
@@ -1064,9 +875,3 @@ function clearRejects() {
 //comment out line760 try -catch statement to replicate the latest and only error in the script
 //the other thing i noticed is that there will be 3 players in rejects when a team is missing a player. how should i go about fixing this? in checkrejects()? force_addplayer?
 //sometimes people dont have a queued role while being in a team (fix?)
-
-
-
-
-//css ideas:
-//lock teams and players, put a little lock icon next to team 1 and to the top left hand corner of each player box. This will lock in each team so the user can keep some things static

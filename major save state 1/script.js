@@ -1,8 +1,8 @@
 //variables:
-const tank_img = '<img width="10px" height="10px" src="./images/tank.png" />';
-const dps_img = '<img width="10px" height="10px" src="./images/dps.png" />';
-const support_img = '<img width="10px" height="10px" src="./images/support.png" />';
-const all_img = '<img width="10px" height="10px" src="./images/all.png" />';
+const tank_img = '<img width="10px" height="10px" src="tank.png" />';
+const dps_img = '<img width="10px" height="10px" src="dps.png" />';
+const support_img = '<img width="10px" height="10px" src="support.png" />';
+const all_img = '<img width="10px" height="10px" src="all.png" />';
 
 //search for len(), count(), && remove() functions for arrays
 class Team {
