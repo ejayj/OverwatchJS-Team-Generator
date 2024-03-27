@@ -85,7 +85,7 @@
                     <div style="width:180px; max-width:250px; display: inline-block;" class="tile is-parent is-vertical is-2">
                       <p style="text-align: center; font-weight: bold; text-decoration: underline; margin-bottom: 0" class="subtitle">Config</p>
                         <article style="text-align: right;" class="tile is-child notification is-primary">
-                          
+                          <form id="config">
                           <tr>Teams: <input style="text-align: center; width: 20px;" value="2" type="text"></tr>
                           <br> 
                           <tr>Size: <input style="text-align: center; width: 20px;" value="5" type="text"></tr> 
@@ -108,6 +108,10 @@
                           <br>
                           <label class="checkbox">Export
                           </label>
+                        </form>
+                        <button style="display: inline-block; padding: 7px; margin-top:13px;"  class="button is-link" 
+                                    type="button" onclick="SaveConfigForm()">Save Settings</button>
+                          
                         </article>
 
                         <p style="text-align: center; font-weight: bold; text-decoration: underline; margin-bottom: 0 " class="subtitle"><a style="text-decoration: none; color: red;" onclick="clearRejects()">x</a> Rejects</p>
@@ -248,23 +252,21 @@
                             </div>
                             </form>
                               
-
-
-                              <!-- replace check boxes with icons; add js to unselect other roles when "all" is elected-->
-                              
-                              <!-- -->
-
-                                 <!-- Add Player --> <!-- I can also put this in the Teams div to have 3 equally spaced rows -->
                           </div>
-                      </div>
-   
+                        </div>
+                        <div class="is-full column">
+                          <button onclick="HTMLcreateTeams()" class="is-one-quarter button is-link is-rounded">Create Teams</button>
+                        </div>
 
                         </div>
+                        
+
                     </div>
 
                     
 
                 </div>
+
 
             </div>
 

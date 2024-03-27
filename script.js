@@ -928,8 +928,8 @@ function validateAddPlayerform() {
   //words.innerHTML="peepee" //error, this does not display peepee after page loads. ill have to read/save these valuessomewhere? run a server?
   //alert('player: '+name+' roles: '+roles+ ' rank '+rank)
   let player = new Player(name, roles, rank) 
-  //add_to_playerpool(player)
-  add_to_playerpool(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12)
+  add_to_playerpool(player)
+  //add_to_playerpool(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12)
   displayplayerpool()
   //printdata
   clearForm()
@@ -1047,6 +1047,12 @@ function clearRejects() {
   document.getElementById("rejects").innerHTML="None"; //reset writing display
 }
 
+function HTMLcreateTeams() { //execute and display team creation. Error: not enough players?
+} //also disable until you reach min players?
+
+function SaveConfigForm() {  //when a config setting is changed, make the save settings button glow. when no setting is changed, make it grey and disabled
+}
+
 //displayplayerpool()
 //eerytime it adds new player, print the list from add new playters into that div 
 
@@ -1054,6 +1060,7 @@ function clearRejects() {
 //console.log(playerpool[0])ow 
 
 //createteams2(2,5) //this will not work right
+//add_to_playerpool(p1,p2,p3,p4,p5,p6,p7)
 //createteams(2,5) //******** */
 //filesave())
 
