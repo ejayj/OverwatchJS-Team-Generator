@@ -1,22 +1,8 @@
-//************************************************** */:
-// VARIABLES 
-//************************************************** */:
-
-//SETTINGS CONFIG:
-var team_count = 2; //amount of teams 
-var team_size = 5; //amount of players in each team //we're gonna replace this with an array
-var role_lock = true; //if role lock is on or off
-var reject_lock = true; //if players can be rejected if they dont fit the team's role needs. only allowed to be on if role lock is on.
-var rank_lock = false; //if player rankings are to be considered.
-var autosave = true; //save each player pool and team creation 
-
-// IMAGES:
-const tank_img = '<img width="10px" height="10px" src="./images/tank.png" />';
-const dps_img = '<img width="10px" height="10px" src="./images/dps.png" />';
-const support_img = '<img width="10px" height="10px" src="./images/support.png" />';
-const all_img = '<img width="10px" height="10px" src="./images/all.png" />';
-
-//************************************************** */:
+//variables:
+const tank_img = '<img width="10px" height="10px" src="tank.png" />';
+const dps_img = '<img width="10px" height="10px" src="dps.png" />';
+const support_img = '<img width="10px" height="10px" src="support.png" />';
+const all_img = '<img width="10px" height="10px" src="all.png" />';
 
 //search for len(), count(), && remove() functions for arrays
 class Team {
@@ -639,7 +625,7 @@ function choose_random_player(){  // maybe make a clause, if number has already 
     return player; //should pop a specific index
 }
 
-function create_team(teamid, size=team_size, roleblock=role_lock, maxteams=team_count,rerollamount=0){  // you have to put a team id in!
+function create_team(teamid, size=5, roleblock=true, maxteams,rerollamount=0){  // you have to put a team id in!
   //console.log("player pool1:"+playerpool)
   //console.log(playerpool)
     //console.log("playerpool2: "+playerpool2)
@@ -656,7 +642,6 @@ function create_team(teamid, size=team_size, roleblock=role_lock, maxteams=team_
       if(outcome==false) { //if add player returns false then there was an error: team prob full
         break;
       }
-
       while (outcome == null){ //keeps trying to add a player until it is successful (until outcomr isnt null)
           if (outcome != null){  // if the outcome wasnt none to begin with, break out of this loop
             break
@@ -805,14 +790,13 @@ function printteam(team){//// make a function that returns a team based off id
   }
 }
 
-function createteams(teamamount=team_count, size=team_size, rolelock=role_lock){
+function createteams(teamamount, size=5, rolelock=true){
   for (let i = 0; i < teamamount; i++) {  // create team with id until id = maxteams
      // save team into a variable such as team 1, team 2, etc. -> can you automate variablenames?
      team1 = create_team(i, size, rolelock,teamamount)
      console.log("Team "+(i+1)+":") //we want i+1 because we dont want a team 0
      printteam(team1)
      console.log('\n')
-     //displayteams(team1,i);
   }
   
   checkplayerrejects()
@@ -944,9 +928,9 @@ function validateAddPlayerform() {
   //words.innerHTML="peepee" //error, this does not display peepee after page loads. ill have to read/save these valuessomewhere? run a server?
   //alert('player: '+name+' roles: '+roles+ ' rank '+rank)
   let player = new Player(name, roles, rank) 
-  add_to_playerpool(player)
+  //add_to_playerpool(player)
   add_to_playerpool(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12)
-  //displayplayerpool()
+  displayplayerpool()
   //printdata
   clearForm()
 }
@@ -1029,7 +1013,7 @@ function displayrejects() {
   for (let i = 0; i<rejects.length;i++) {
     let player=rejects[i]["name"]
     let playervar="'"+player+"'" //var to pass remove from playerpool button 
-    writing=writing+'<div class="popup"><span>'+player+'</span> <div class="popup-content" style="color: black;" ><p> Rank: '+rejects[i]["rank"]+'<br></p></div></div> '+roles_to_img(rejects[i]["role"])+'</div><br>';
+    writing=writing+'<a style="color:red;" onclick="remove_from_playerpool('+playervar+')"> x </a><div class="popup"><span>'+player+'</span> <div class="popup-content"><p> Rank: '+rejects[i]["rank"]+'<br></p></div></div> '+roles_to_img(rejects[i]["role"])+'</div><br>';
 
 
     //if ranks are off, dont show ranks on scroll
@@ -1063,171 +1047,6 @@ function clearRejects() {
   document.getElementById("rejects").innerHTML="None"; //reset writing display
 }
 
-function HTMLcreateTeams() { //execute and display team creation. Error: not enough players?
-  createteams(team_count,team_size);
-  displayrejects();
-  displayteams();
-  saveData();
-} //also disable until you reach min players?
-
-function HTMLcreateTeams6v6() { //execute and display team creation. Error: not enough players?
-  createteams(2,6);
-  displayrejects();
-  displayteams();
-  saveData();
-}
-
-function displayteams() {
-//
-  for (let j = 0; j<teams.length;j++) { //iterate through teams
-    var teamid=j+1;
-    for (let i=0; i<teams[j].players.length;i++) { //iterate through each team players
-      html_id="Team"+teamid+"p"+(i+1); //<p id="Team2p1">Player 1</p> creates the id needed. this creates variable ids!!!! or variable variables! variables that chan change and have their name altered and be created
-      // var player=team['players'][i]
-      //print(f"{players}, {players.queuedroles}") 
-      var team = teams[j]
-      try {
-      //console.log(player.name + ", " + player.queuedroles)// {players.rank}
-        var player=team.players[i]
-        var player_name=player.name
-        console.log(player_name)
-        var player_roles=player.role; //team.players[i].queuedroles //player.queuedroles;
-        var player_rank=player.rank;
-        
-        document.getElementById(html_id).innerHTML=('<div class="popup"><span>'+player_name+'</span> <div class="popup-content"><p style="color: black;"> Rank: '+player_rank+' <br> '+roles_to_img(player_roles)+'</p></div></div></div><br>'); 
-        //document.getElementById(html_id).innerHTML=('<div class="popup"><span>'+player_name+'</span> <div class="popup-content"><p> Rank: '+player_rank+' '+roles_to_img(player_roles)+'<br></p></div></div> '+roles_to_img(player_roles)+'</div><br>'); 
-        
-      }
-      catch {
-        console.log('could not print player '+i)
-        //alert('error creating teams: code 0x005');
-        //break;
-      } finally {
-        console.log(html_id);
-      }
-      //how to target specific team?
-      
-  
-    
-    }
-  }
-}
-
-function RandomizeTeams() {
-  //teams=[];
-  //playerpool=masterplayerpool;
-  reset_variables();
-  createteams(team_count,team_size);
-  displayrejects();
-  displayteams();
-  saveData();
-  readData();
-}
-
-function RandomizeTeams6v6() {
-  //teams=[];
-  //playerpool=masterplayerpool;
-  reset_variables();
-  createteams(2,6);
-  displayrejects();
-  displayteams();
-  saveData();
-  readData();
-}
-
-function reset_variables() {
-  playerpool=masterplayerpool;
-  //playerpool = []  // these are players who may be popped
-  playerpool2 = []
-  // this is left over players, append this to player pool after a team has been created
-  rejects = []  // players who could not be fit into the game with criteria
-  maxteams = 0  // these are how many teams you want to split the player pool into
-  masterdictionary =null
-  teams = []
-  team1 = ""  // fix this to be dynamic later
-  team2 = ""
-  index =0
-  save = []
-  runtime = 0 //how many time program was created
-}
-
-function saveData() {
-  //get time 
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-  var yyyy = today.getFullYear();
-  //var time= today.getHours() + ":" + today.getMinutes() + ":" + String(today.getSeconds()).padStart(2, '0');
-  let time = today.toLocaleString([], {
-    hour: '2-digit',
-    minute: '2-digit'
-    });
-  today = mm + "/" + dd + "/" + yyyy+" - "+time;
-
-  // Create an object
-  const userData = {
-    time: today, //"03282024",
-    teams: teams,
-    playerpool: masterplayerpool,
-    rejects: rejects
-  };
-
-// Store the object into storage
-localStorage.setItem(today, JSON.stringify(userData));
-
-}
-
-function readData() {
-  for (i = 0; i < localStorage.length; i++) {
-    x = localStorage.key(i);
-    document.getElementById("Teamhistory").innerHTML += "<option value='"+x+"'>"+x+"</option>";
-    //console.log(x);
-    //console.log();
-  }
-
-}
-
-
-function Check_History_Team_Size(data) { //creates 6v6 or 5v5 teams based on save
-  teams=data["teams"];
-  if (teams[0].players.length==6) { //if 6v6
-    //window.alert('we reach here');
-    document.getElementById("team1").innerHTML=team1_6v6HTML;
-    document.getElementById("team2").innerHTML=team2_6v6HTML;
-  } else { //if 5v5
-    document.getElementById("team1").innerHTML=team1_5v5HTML;
-    document.getElementById("team2").innerHTML=team2_5v5HTML;
-  }
-}
-
-
-function showData() { //how to show 6v6 vs. 5v5 ?
-  //let key="03282024-2:50:42"; //test value 
-  let key=document.forms["historyForm"]["Teamhistory"].value;
-  let data = JSON.parse(localStorage.getItem(key));
-  //console.log(data["teams"]);
-  Check_History_Team_Size(data); //change html to 5v5 or 6v6 size
-
-  teams=data["teams"]
-  playerpool=data["playerpool"]
-  rejects=data["rejects"]
-  printdata();
-  document.getElementById("history_date-time").innerHTML=key;
-}
-//6v6 button?
-//use action listener for the select html
-//use for loop to print the local storage keys, and upon selection it will execute printdata/sow data 
-
-
-
-function toggleContactModal() {
-  document.getElementById("ContactModal").classList.toggle('is-active');
-}
-
-function toggleAboutModal() {
-  document.getElementById("AboutModal").classList.toggle('is-active');
-}
-
 //displayplayerpool()
 //eerytime it adds new player, print the list from add new playters into that div 
 
@@ -1235,7 +1054,6 @@ function toggleAboutModal() {
 //console.log(playerpool[0])ow 
 
 //createteams2(2,5) //this will not work right
-//add_to_playerpool(p1,p2,p3,p4,p5,p6,p7)
 //createteams(2,5) //******** */
 //filesave())
 
@@ -1246,36 +1064,9 @@ function toggleAboutModal() {
 //comment out line760 try -catch statement to replicate the latest and only error in the script
 //the other thing i noticed is that there will be 3 players in rejects when a team is missing a player. how should i go about fixing this? in checkrejects()? force_addplayer?
 //sometimes people dont have a queued role while being in a team (fix?)
-//function to transfer player ranks to values
-//add randomize team function? wen team is already done, hit randomize to change it up
-//add config options
-//make buttons disabled; i.e. create teams if not enough players, have popup rhat says you dont have enough players; either add more or hange this is n the config settings at top left
-// i.e. randomize - cant randomize until you have a team (does same thing on i=0 first button press of create teams)
-//i.e. save srttings - disabled if you didnt actually change any settings
-//cap team size at 6 and team amount?
 
-//make a settings button next to create teams with options:
-//increase team amount and team size 5/6 (new page gets loaded)
-//and ranks on or off. do circumnavigate roles, everyone can just be on all
-//it will auto save each team created
-//export doesn't need to be there
+
 
 
 //css ideas:
 //lock teams and players, put a little lock icon next to team 1 and to the top left hand corner of each player box. This will lock in each team so the user can keep some things static
-
-//if someone wants to change roles of a player already in player pool,
-//they'll have to simply delete player and add them again with proper roles
-//p.s. hovering over rejects doesn't show their rank
-
-
-
-
-
-//******************************************************* */
-//HTML VARIABLES //
-const team1_6v6HTML= '<div style="padding:5px;" class="columns is-centered is-mobile"> <div id="t1p1" style="border:1px solid black;" class="auto  column"> <div id="t1p1icon"> <img src="./images/tank.png" width="20px" height="20px"></div><p id="Team1p1">Player 1</p></div><div id="t1p2" style="border:1px solid black;" class="auto column"><div id="t1p2icon"><img src="./images/tank.png" width="20px" height="20px"></div><p id="Team1p2">Player 2</p></div><div id="t1p3" style="border:1px solid black;" class="auto column"><div id="t1p3icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team1p3">Player 3</p></div><div id="t1p4" style="border:1px solid black;" class="auto column"><div id="t1p4icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team1p4">Player 4</p></div><div id="t1p5" style="border:1px solid black;" class="auto column"><div id="t1p5icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team1p5">Player 5</p></div><div id="t1p6" style="border:1px solid black;" class="auto column"><div id="t1p6icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team1p6">Player 6</p></div>';
-const team2_6v6HTML= '<div style="padding:5px;" class="columns is-centered is-mobile"> <div id="t2p1" style="border:1px solid black;" class="auto  column"> <div id="t2p1icon"> <img src="./images/tank.png" width="20px" height="20px"></div><p id="Team2p1">Player 1</p></div><div id="t2p2" style="border:1px solid black;" class="auto column"><div id="t2p2icon"><img src="./images/tank.png" width="20px" height="20px"></div><p id="Team2p2">Player 2</p></div><div id="t2p3" style="border:1px solid black;" class="auto column"><div id="t2p3icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team2p3">Player 3</p></div><div id="t2p4" style="border:1px solid black;" class="auto column"><div id="t2p4icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team2p4">Player 4</p></div><div id="t2p5" style="border:1px solid black;" class="auto column"><div id="t2p5icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team2p5">Player 5</p></div><div id="t2p6" style="border:1px solid black;" class="auto column"><div id="t2p6icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team2p6">Player 6</p></div>';
-const team1_5v5HTML='<div style="padding:5px;" class="columns is-centered is-mobile"><div id="t1p1" style="border:1px solid black;" class="auto  column"><div id="t1p1icon"> <img src="./images/tank.png" width="20px" height="20px"></div><p id="Team1p1">Player 1</p></div><div id="t1p2" style="border:1px solid black;" class="auto column"><div id="t1p2icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team1p2">Player 2</p></div><div id="t1p3" style="border:1px solid black;" class="auto column"><div id="t1p3icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team1p3">Player 3</p></div><div id="t1p4" style="border:1px solid black;" class="auto column"><div id="t1p4icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team1p4">Player 4</p></div><div id="t1p5" style="border:1px solid black;" class="auto column"><div id="t1p5icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team1p5">Player 5</p></div></div>';
-const team2_5v5HTML='<div style="padding:5px;" class="columns is-centered is-mobile"><div id="t2p1" style="border:1px solid black;" class="auto  column"><div id="t2p1icon"> <img src="./images/tank.png" width="20px" height="20px"></div><p id="Team2p1">Player 1</p></div><div id="t2p2" style="border:1px solid black;" class="auto column"><div id="t2p2icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team2p2">Player 2</p></div><div id="t2p3" style="border:1px solid black;" class="auto column"><div id="t2p3icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team2p3">Player 3</p></div><div id="t2p4" style="border:1px solid black;" class="auto column"><div id="t2p4icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team2p4">Player 4</p></div><div id="t2p5" style="border:1px solid black;" class="auto column"><div id="t2p5icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team2p5">Player 5</p></div>';
-

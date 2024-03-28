@@ -946,7 +946,7 @@ function validateAddPlayerform() {
   let player = new Player(name, roles, rank) 
   add_to_playerpool(player)
   add_to_playerpool(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12)
-  //displayplayerpool()
+  displayplayerpool()
   //printdata
   clearForm()
 }
@@ -1067,15 +1067,7 @@ function HTMLcreateTeams() { //execute and display team creation. Error: not eno
   createteams(team_count,team_size);
   displayrejects();
   displayteams();
-  saveData();
 } //also disable until you reach min players?
-
-function HTMLcreateTeams6v6() { //execute and display team creation. Error: not enough players?
-  createteams(2,6);
-  displayrejects();
-  displayteams();
-  saveData();
-}
 
 function displayteams() {
 //
@@ -1091,12 +1083,9 @@ function displayteams() {
         var player=team.players[i]
         var player_name=player.name
         console.log(player_name)
-        var player_roles=player.role; //team.players[i].queuedroles //player.queuedroles;
-        var player_rank=player.rank;
+        var player_roles=team.players[i].queuedroles
         
-        document.getElementById(html_id).innerHTML=('<div class="popup"><span>'+player_name+'</span> <div class="popup-content"><p style="color: black;"> Rank: '+player_rank+' <br> '+roles_to_img(player_roles)+'</p></div></div></div><br>'); 
-        //document.getElementById(html_id).innerHTML=('<div class="popup"><span>'+player_name+'</span> <div class="popup-content"><p> Rank: '+player_rank+' '+roles_to_img(player_roles)+'<br></p></div></div> '+roles_to_img(player_roles)+'</div><br>'); 
-        
+        document.getElementById(html_id).innerHTML=player_name; 
       }
       catch {
         console.log('could not print player '+i)
@@ -1111,121 +1100,11 @@ function displayteams() {
     
     }
   }
-}
 
-function RandomizeTeams() {
-  //teams=[];
-  //playerpool=masterplayerpool;
-  reset_variables();
-  createteams(team_count,team_size);
-  displayrejects();
-  displayteams();
-  saveData();
-  readData();
-}
-
-function RandomizeTeams6v6() {
-  //teams=[];
-  //playerpool=masterplayerpool;
-  reset_variables();
-  createteams(2,6);
-  displayrejects();
-  displayteams();
-  saveData();
-  readData();
-}
-
-function reset_variables() {
-  playerpool=masterplayerpool;
-  //playerpool = []  // these are players who may be popped
-  playerpool2 = []
-  // this is left over players, append this to player pool after a team has been created
-  rejects = []  // players who could not be fit into the game with criteria
-  maxteams = 0  // these are how many teams you want to split the player pool into
-  masterdictionary =null
-  teams = []
-  team1 = ""  // fix this to be dynamic later
-  team2 = ""
-  index =0
-  save = []
-  runtime = 0 //how many time program was created
-}
-
-function saveData() {
-  //get time 
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-  var yyyy = today.getFullYear();
-  //var time= today.getHours() + ":" + today.getMinutes() + ":" + String(today.getSeconds()).padStart(2, '0');
-  let time = today.toLocaleString([], {
-    hour: '2-digit',
-    minute: '2-digit'
-    });
-  today = mm + "/" + dd + "/" + yyyy+" - "+time;
-
-  // Create an object
-  const userData = {
-    time: today, //"03282024",
-    teams: teams,
-    playerpool: masterplayerpool,
-    rejects: rejects
-  };
-
-// Store the object into storage
-localStorage.setItem(today, JSON.stringify(userData));
 
 }
 
-function readData() {
-  for (i = 0; i < localStorage.length; i++) {
-    x = localStorage.key(i);
-    document.getElementById("Teamhistory").innerHTML += "<option value='"+x+"'>"+x+"</option>";
-    //console.log(x);
-    //console.log();
-  }
-
-}
-
-
-function Check_History_Team_Size(data) { //creates 6v6 or 5v5 teams based on save
-  teams=data["teams"];
-  if (teams[0].players.length==6) { //if 6v6
-    //window.alert('we reach here');
-    document.getElementById("team1").innerHTML=team1_6v6HTML;
-    document.getElementById("team2").innerHTML=team2_6v6HTML;
-  } else { //if 5v5
-    document.getElementById("team1").innerHTML=team1_5v5HTML;
-    document.getElementById("team2").innerHTML=team2_5v5HTML;
-  }
-}
-
-
-function showData() { //how to show 6v6 vs. 5v5 ?
-  //let key="03282024-2:50:42"; //test value 
-  let key=document.forms["historyForm"]["Teamhistory"].value;
-  let data = JSON.parse(localStorage.getItem(key));
-  //console.log(data["teams"]);
-  Check_History_Team_Size(data); //change html to 5v5 or 6v6 size
-
-  teams=data["teams"]
-  playerpool=data["playerpool"]
-  rejects=data["rejects"]
-  printdata();
-  document.getElementById("history_date-time").innerHTML=key;
-}
-//6v6 button?
-//use action listener for the select html
-//use for loop to print the local storage keys, and upon selection it will execute printdata/sow data 
-
-
-
-function toggleContactModal() {
-  document.getElementById("ContactModal").classList.toggle('is-active');
-}
-
-function toggleAboutModal() {
-  document.getElementById("AboutModal").classList.toggle('is-active');
+function SaveConfigForm() {  //when a config setting is changed, make the save settings button glow. when no setting is changed, make it grey and disabled
 }
 
 //displayplayerpool()
@@ -1267,15 +1146,3 @@ function toggleAboutModal() {
 //if someone wants to change roles of a player already in player pool,
 //they'll have to simply delete player and add them again with proper roles
 //p.s. hovering over rejects doesn't show their rank
-
-
-
-
-
-//******************************************************* */
-//HTML VARIABLES //
-const team1_6v6HTML= '<div style="padding:5px;" class="columns is-centered is-mobile"> <div id="t1p1" style="border:1px solid black;" class="auto  column"> <div id="t1p1icon"> <img src="./images/tank.png" width="20px" height="20px"></div><p id="Team1p1">Player 1</p></div><div id="t1p2" style="border:1px solid black;" class="auto column"><div id="t1p2icon"><img src="./images/tank.png" width="20px" height="20px"></div><p id="Team1p2">Player 2</p></div><div id="t1p3" style="border:1px solid black;" class="auto column"><div id="t1p3icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team1p3">Player 3</p></div><div id="t1p4" style="border:1px solid black;" class="auto column"><div id="t1p4icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team1p4">Player 4</p></div><div id="t1p5" style="border:1px solid black;" class="auto column"><div id="t1p5icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team1p5">Player 5</p></div><div id="t1p6" style="border:1px solid black;" class="auto column"><div id="t1p6icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team1p6">Player 6</p></div>';
-const team2_6v6HTML= '<div style="padding:5px;" class="columns is-centered is-mobile"> <div id="t2p1" style="border:1px solid black;" class="auto  column"> <div id="t2p1icon"> <img src="./images/tank.png" width="20px" height="20px"></div><p id="Team2p1">Player 1</p></div><div id="t2p2" style="border:1px solid black;" class="auto column"><div id="t2p2icon"><img src="./images/tank.png" width="20px" height="20px"></div><p id="Team2p2">Player 2</p></div><div id="t2p3" style="border:1px solid black;" class="auto column"><div id="t2p3icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team2p3">Player 3</p></div><div id="t2p4" style="border:1px solid black;" class="auto column"><div id="t2p4icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team2p4">Player 4</p></div><div id="t2p5" style="border:1px solid black;" class="auto column"><div id="t2p5icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team2p5">Player 5</p></div><div id="t2p6" style="border:1px solid black;" class="auto column"><div id="t2p6icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team2p6">Player 6</p></div>';
-const team1_5v5HTML='<div style="padding:5px;" class="columns is-centered is-mobile"><div id="t1p1" style="border:1px solid black;" class="auto  column"><div id="t1p1icon"> <img src="./images/tank.png" width="20px" height="20px"></div><p id="Team1p1">Player 1</p></div><div id="t1p2" style="border:1px solid black;" class="auto column"><div id="t1p2icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team1p2">Player 2</p></div><div id="t1p3" style="border:1px solid black;" class="auto column"><div id="t1p3icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team1p3">Player 3</p></div><div id="t1p4" style="border:1px solid black;" class="auto column"><div id="t1p4icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team1p4">Player 4</p></div><div id="t1p5" style="border:1px solid black;" class="auto column"><div id="t1p5icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team1p5">Player 5</p></div></div>';
-const team2_5v5HTML='<div style="padding:5px;" class="columns is-centered is-mobile"><div id="t2p1" style="border:1px solid black;" class="auto  column"><div id="t2p1icon"> <img src="./images/tank.png" width="20px" height="20px"></div><p id="Team2p1">Player 1</p></div><div id="t2p2" style="border:1px solid black;" class="auto column"><div id="t2p2icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team2p2">Player 2</p></div><div id="t2p3" style="border:1px solid black;" class="auto column"><div id="t2p3icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team2p3">Player 3</p></div><div id="t2p4" style="border:1px solid black;" class="auto column"><div id="t2p4icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team2p4">Player 4</p></div><div id="t2p5" style="border:1px solid black;" class="auto column"><div id="t2p5icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team2p5">Player 5</p></div>';
-

@@ -946,7 +946,7 @@ function validateAddPlayerform() {
   let player = new Player(name, roles, rank) 
   add_to_playerpool(player)
   add_to_playerpool(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12)
-  //displayplayerpool()
+  displayplayerpool()
   //printdata
   clearForm()
 }
