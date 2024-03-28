@@ -35,12 +35,12 @@
     <aside class="menu">
       <p class="menu-label">. General</p>
       <ul class="menu-list">
-        <li><a href="/index.html" class="is-active">5v5</a></li>
-        <li><a href="/index6v6.html">6v6</a></li> <!-- new 6v6 page -->
-        <li><a href="/history.html" >History</a></li> <!-- html page-->
+        <li><a href="/index.html">5v5</a></li>
+        <li><a href="/index6v6.html" class="is-active">6v6</a></li> <!-- new 6v6 page -->
+        <li><a href="/history.html">History</a></li> <!-- html page-->
         <li><a class="navbutton" href="https://github.com/ejayj">GitHub</a></li> <!-- link to my github-->
-        <li><a class="navbutton" onclick="toggleContactModal()">Contact</a></li> <!-- -->
-        <li><a class="navbutton" onclick="toggleAboutModal()">About</a></li> <!-- modal // -->
+        <li><a class="navbutton">Contact</a></li> <!-- -->
+        <li><a class="navbutton">About</a></li> <!-- modal // -->
       </ul>
     </aside>
       
@@ -50,57 +50,11 @@
   <!----------------------- Header --------------------------->
   <br>
   <div class="columns is-centered" styles="">
-      <div class="column is-half has-background-info has-text-centered"><p class="subtitle" style="font-weight: bold;">Overwatch Team Generator </p>
+      <div class="column is-half has-background-info has-text-centered"><p class="subtitle" style="font-weight: bold;">Overwatch Team Generator </p> 
       
       
       </div>
   </div>
-
-    <!----------------------- Modals --------------------------->
-     <!-- Contact Me ... -->
-  <div id="ContactModal" class="modal">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">Contact ME</p>
-        <button class="delete" aria-label="close" onclick="toggleContactModal()"></button>
-      </header>
-      <section class="modal-card-body">
-        <div>
-          <p>I am blah blah blah, my git profile, my discord?, my email, and my personal website</p>
-        </div>
-      </section>
-      <footer class="modal-card-foot">
-        <div class="buttons">
-        </div>
-      </footer>
-    </div>
-  </div>
-
-  <!-- About  ... -->
-  <div id="AboutModal" class="modal">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">About</p>
-        <button class="delete" aria-label="close" onclick="toggleAboutModal()"></button>
-      </header>
-      <section class="modal-card-body">
-        <div>
-          <h1 class="subtitle" style="font-weight: bold;">How-To</h1>
-          <br>
-          <p> The Overwatch Team Generator started as a personal fun project for my friend Jade and I. We often held overwatch tournaments but didn't necessarily have the right tool for the job. With this site, you're able to configure an overwatch team with role parameters, take into account player's rankings for team balancing, and visit a history of your team creations in case you have a team in mind that you really like. You can add or remove players from the list, and you can set as many teams as you like.</p>
-        </div>
-      </section>
-      <footer class="modal-card-foot">
-        <div class="buttons">
-        </div>
-      </footer>
-    </div>
-  </div>
-
-
-  
     <div class="main">
        
 
@@ -131,7 +85,7 @@
                             </div>
 
                             <div id="t1p2" style="border:1px solid black;" class="auto column">
-                              <div id="t1p2icon"><img src="./images/dps.png" width="20px" height="20px"></div>
+                              <div id="t1p2icon"><img src="./images/tank.png" width="20px" height="20px"></div>
                               <p id="Team1p2">Player 2</p>
                             </div>
                             <div id="t1p3" style="border:1px solid black;" class="auto column">
@@ -139,12 +93,16 @@
                               <p id="Team1p3">Player 3</p>
                             </div>
                             <div id="t1p4" style="border:1px solid black;" class="auto column">
-                              <div id="t1p4icon"><img src="./images/support.png" width="20px" height="20px"></div>
+                              <div id="t1p4icon"><img src="./images/dps.png" width="20px" height="20px"></div>
                               <p id="Team1p4">Player 4</p>
-                            </div>
+                              </div>
                             <div id="t1p5" style="border:1px solid black;" class="auto column">
                               <div id="t1p5icon"><img src="./images/support.png" width="20px" height="20px"></div>
                               <p id="Team1p5">Player 5</p>
+                              </div>
+                            <div id="t1p6" style="border:1px solid black;" class="auto column">
+                              <div id="t1p6icon"><img src="./images/support.png" width="20px" height="20px"></div>
+                              <p id="Team1p6">Player 6</p>
                               </div>
                         </div>
 
@@ -162,7 +120,7 @@
                             </div>
 
                             <div id="t2p2" style="border:1px solid black;" class="auto column">
-                              <div id="t2p2icon"><img src="./images/dps.png" width="20px" height="20px"></div>
+                              <div id="t2p2icon"><img src="./images/tank.png" width="20px" height="20px"></div>
                               <p id="Team2p2">Player 2</p>
                             </div>
                             <div id="t2p3" style="border:1px solid black;" class="auto column">
@@ -170,12 +128,16 @@
                               <p id="Team2p3">Player 3</p>
                             </div>
                             <div id="t2p4" style="border:1px solid black;" class="auto column">
-                              <div id="t2p4icon"><img src="./images/support.png" width="20px" height="20px"></div>
+                              <div id="t2p4icon"><img src="./images/dps.png" width="20px" height="20px"></div>
                               <p id="Team2p4">Player 4</p>
                             </div>
                             <div id="t2p5" style="border:1px solid black;" class="auto column">
                               <div id="t2p5icon"><img src="./images/support.png" width="20px" height="20px"></div>
                               <p id="Team2p5">Player 5</p>
+                              </div>
+                            <div id="t2p6" style="border:1px solid black;" class="auto column">
+                              <div id="t2p6icon"><img src="./images/support.png" width="20px" height="20px"></div>
+                              <p id="Team2p6">Player 6</p>
                               </div>
                         </div>
 
@@ -245,8 +207,8 @@
                           </div>
                         </div>
                         <div class="is-full column">
-                          <button onclick="HTMLcreateTeams()" class="is-one-quarter button is-link is-rounded">Create Teams</button>
-                          <button onclick="RandomizeTeams()" class="is-one-quarter button is-danger is-rounded">Randomize</button>
+                          <button onclick="HTMLcreateTeams6v6()" class="is-one-quarter button is-link is-rounded">Create Teams</button>
+                          <button onclick="RandomizeTeams6v6()" class="is-one-quarter button is-danger is-rounded">Randomize</button>
                         </div>
 
                         </div>

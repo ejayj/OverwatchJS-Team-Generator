@@ -26,83 +26,24 @@
     <script src="script.js"></script>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <nav></nav>    
 </head>
 
 <body>
-
-  <!---------------Sidebar------------------>
-  <div style="width:150px; max-width:170px; display: inline-block; background-color: rgb(236, 231, 231);" class="sidenav">
-    <aside class="menu">
-      <p class="menu-label">. General</p>
-      <ul class="menu-list">
-        <li><a href="/index.html" class="is-active">5v5</a></li>
-        <li><a href="/index6v6.html">6v6</a></li> <!-- new 6v6 page -->
-        <li><a href="/history.html" >History</a></li> <!-- html page-->
-        <li><a class="navbutton" href="https://github.com/ejayj">GitHub</a></li> <!-- link to my github-->
-        <li><a class="navbutton" onclick="toggleContactModal()">Contact</a></li> <!-- -->
-        <li><a class="navbutton" onclick="toggleAboutModal()">About</a></li> <!-- modal // -->
-      </ul>
-    </aside>
-      
-  </div>
-
-
-  <!----------------------- Header --------------------------->
-  <br>
-  <div class="columns is-centered" styles="">
-      <div class="column is-half has-background-info has-text-centered"><p class="subtitle" style="font-weight: bold;">Overwatch Team Generator </p>
-      
-      
-      </div>
-  </div>
-
-    <!----------------------- Modals --------------------------->
-     <!-- Contact Me ... -->
-  <div id="ContactModal" class="modal">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">Contact ME</p>
-        <button class="delete" aria-label="close" onclick="toggleContactModal()"></button>
-      </header>
-      <section class="modal-card-body">
-        <div>
-          <p>I am blah blah blah, my git profile, my discord?, my email, and my personal website</p>
-        </div>
-      </section>
-      <footer class="modal-card-foot">
-        <div class="buttons">
-        </div>
-      </footer>
-    </div>
-  </div>
-
-  <!-- About  ... -->
-  <div id="AboutModal" class="modal">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">About</p>
-        <button class="delete" aria-label="close" onclick="toggleAboutModal()"></button>
-      </header>
-      <section class="modal-card-body">
-        <div>
-          <h1 class="subtitle" style="font-weight: bold;">How-To</h1>
-          <br>
-          <p> The Overwatch Team Generator started as a personal fun project for my friend Jade and I. We often held overwatch tournaments but didn't necessarily have the right tool for the job. With this site, you're able to configure an overwatch team with role parameters, take into account player's rankings for team balancing, and visit a history of your team creations in case you have a team in mind that you really like. You can add or remove players from the list, and you can set as many teams as you like.</p>
-        </div>
-      </section>
-      <footer class="modal-card-foot">
-        <div class="buttons">
-        </div>
-      </footer>
-    </div>
-  </div>
-
-
-  
-    <div class="main">
+    <div>
        
+        <div class="column"></div><!-- blank space -->
+        <div class="column"></div><!-- blank space -->
+        <!------------- Header ------------>
+        <div class="columns is-centered" styles="">
+            <div class="column is-four-fifths has-background-info has-text-centered">Header 
+              
+              
+            </div>
+        </div>
+        
+
+        
 
         <!------------- Center Content [body] ------------>
 
@@ -111,7 +52,21 @@
               
                 <div class="tile">
 
-                    
+                    <!-- Left Sidebar -->
+                    <div style="width:150px; max-width:170px; display: inline-block; background-color: rgb(236, 231, 231);" class="tile is-parent is-vertical is-2">
+                      <aside class="menu">
+                        <p class="menu-label">General</p>
+                        <ul class="menu-list">
+                          <li><a class="is-active">Home</a></li>
+                          <li><a>Account</a></li>
+                          <li><a>History</a></li>
+                          <li><a>GitHub</a></li>
+                          <li><a>Contact Me</a></li>
+                          <li><a>About</a></li>
+                        </ul>
+                      </aside>
+                        
+                    </div>
                   
                     <!-- Center Bar-->
                     <div class="tile is-parent is-vertical ">
@@ -290,17 +245,12 @@
 
         <div class="column"></div><!-- blank space -->
 
+        <!------------- Footer ------------>
+        <footer style="position: relative; text-align: center" class="has-background-grey footer">
+           Footer
+        </footer>
 
     </div>
-
-    <!--------------- footer ------------->
-    <div class=" is-centered has-text-centered has-background-grey">
-      <br>
-        Footer
-      <br>
-      <br>
-      
-  </div>
 </body>
 
 </html>

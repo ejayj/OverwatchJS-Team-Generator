@@ -26,83 +26,53 @@
     <script src="script.js"></script>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <nav></nav>    
 </head>
 
 <body>
-
-  <!---------------Sidebar------------------>
-  <div style="width:150px; max-width:170px; display: inline-block; background-color: rgb(236, 231, 231);" class="sidenav">
-    <aside class="menu">
-      <p class="menu-label">. General</p>
-      <ul class="menu-list">
-        <li><a href="/index.html" class="is-active">5v5</a></li>
-        <li><a href="/index6v6.html">6v6</a></li> <!-- new 6v6 page -->
-        <li><a href="/history.html" >History</a></li> <!-- html page-->
-        <li><a class="navbutton" href="https://github.com/ejayj">GitHub</a></li> <!-- link to my github-->
-        <li><a class="navbutton" onclick="toggleContactModal()">Contact</a></li> <!-- -->
-        <li><a class="navbutton" onclick="toggleAboutModal()">About</a></li> <!-- modal // -->
-      </ul>
-    </aside>
-      
-  </div>
-
-
-  <!----------------------- Header --------------------------->
-  <br>
-  <div class="columns is-centered" styles="">
-      <div class="column is-half has-background-info has-text-centered"><p class="subtitle" style="font-weight: bold;">Overwatch Team Generator </p>
-      
-      
-      </div>
-  </div>
-
-    <!----------------------- Modals --------------------------->
-     <!-- Contact Me ... -->
-  <div id="ContactModal" class="modal">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">Contact ME</p>
-        <button class="delete" aria-label="close" onclick="toggleContactModal()"></button>
-      </header>
-      <section class="modal-card-body">
-        <div>
-          <p>I am blah blah blah, my git profile, my discord?, my email, and my personal website</p>
-        </div>
-      </section>
-      <footer class="modal-card-foot">
-        <div class="buttons">
-        </div>
-      </footer>
-    </div>
-  </div>
-
-  <!-- About  ... -->
-  <div id="AboutModal" class="modal">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">About</p>
-        <button class="delete" aria-label="close" onclick="toggleAboutModal()"></button>
-      </header>
-      <section class="modal-card-body">
-        <div>
-          <h1 class="subtitle" style="font-weight: bold;">How-To</h1>
-          <br>
-          <p> The Overwatch Team Generator started as a personal fun project for my friend Jade and I. We often held overwatch tournaments but didn't necessarily have the right tool for the job. With this site, you're able to configure an overwatch team with role parameters, take into account player's rankings for team balancing, and visit a history of your team creations in case you have a team in mind that you really like. You can add or remove players from the list, and you can set as many teams as you like.</p>
-        </div>
-      </section>
-      <footer class="modal-card-foot">
-        <div class="buttons">
-        </div>
-      </footer>
-    </div>
-  </div>
-
-
-  
-    <div class="main">
+    <div>
        
+        <div class="column"></div><!-- blank space -->
+        <div class="column"></div><!-- blank space -->
+        <!------------- Header ------------>
+        <div class="columns is-centered" styles="">
+            <div class="column is-four-fifths has-background-info has-text-centered">Header 
+              
+              <div style="float:right;" class="dropdown is-hoverable">
+                
+                <div class="dropdown-trigger">
+                  <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+                    <span><img width="30px" src="./images/hamburger.png"></span>
+                    <span class="icon is-small">
+                      <i class="fas fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                  <div class="dropdown-content">
+
+                    <div class="dropdown-item">
+                      
+                      <aside style="text-align: right;" class="menu">
+                        <ul class="menu-list menu-label">
+                          <li><a class="is-active">Home</a></li>
+                          <li><a>Account</a></li>
+                          <li><a>History</a></li>
+                          <li><a>GitHub</a></li>
+                          <li><a>Contact Me</a></li>
+                          <li><a>About</a></li>
+                        </ul>
+                      </aside>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        
+
+        
 
         <!------------- Center Content [body] ------------>
 
@@ -111,8 +81,48 @@
               
                 <div class="tile">
 
-                    
-                  
+                    <!-- Left Sidebar -->
+                    <div style="width:180px; max-width:250px; display: inline-block;" class="tile is-parent is-vertical is-2">
+                      <p style="text-align: center; font-weight: bold; text-decoration: underline; margin-bottom: 0" class="subtitle">Config</p>
+                        <article style="text-align: right;" class="tile is-child notification is-primary">
+                          <form id="config">
+                          <tr>Teams: <input style="text-align: center; width: 20px;" value="2" type="text"></tr>
+                          <br> 
+                          <tr>Size: <input style="text-align: center; width: 20px;" value="5" type="text"></tr> 
+                          <br>
+                          <label class="checkbox">Roles:
+                            <input type="checkbox" checked>
+                          </label>
+                          <br>
+                          <label class="checkbox">Rejects:
+                            <input type="checkbox" checked>
+                          </label>
+                          <br> 
+                          <label class="checkbox">Ranks:
+                            <input type="checkbox">
+                          </label>
+                          <br>
+                          <label class="checkbox">AutoSave:
+                            <input type="checkbox" checked>
+                          </label>
+                          <br>
+                          <label class="checkbox">Export
+                          </label>
+                        </form>
+                        <button style="display: inline-block; padding: 7px; margin-top:13px;"  class="button is-link" 
+                                    type="button" onclick="SaveConfigForm()">Save Settings</button>
+                          
+                        </article>
+
+                        <p style="text-align: center; font-weight: bold; text-decoration: underline; margin-bottom: 0 " class="subtitle"><a style="text-decoration: none; color: red;" onclick="clearRejects()">x</a> Rejects</p>
+
+                        <article class="tile is-child notification is-info is-12">
+                          <div id="rejects" class="tile is-child">
+                            None
+                        </div>
+                        </article>
+                    </div>
+
                     <!-- Center Bar-->
                     <div class="tile is-parent is-vertical ">
 
@@ -257,6 +267,8 @@
                     
 
                 </div>
+
+
             </div>
 
             <!-- Right Sidebar-->
@@ -272,35 +284,17 @@
                           
                     </div>
                 </article>
-
-                <div style="width:180px; max-width:250px; display: inline-block;" class="tile is-parent is-vertical is-2">
-
-                  <p style="text-align: center; font-weight: bold; text-decoration: underline; margin-bottom: 0 " class="subtitle"><a style="text-decoration: none; color: red;" onclick="clearRejects()">x</a> Rejects</p>
-
-                  <article class="tile is-child notification is-info is-12">
-                    <div id="rejects" class="tile is-child">
-                      None
-                  </div>
-                  </article>
-              </div>
             </div>
-
-            
         </div>
 
         <div class="column"></div><!-- blank space -->
 
+        <!------------- Footer ------------>
+        <footer style="position: relative; text-align: center" class="has-background-grey footer">
+           Footer
+        </footer>
 
     </div>
-
-    <!--------------- footer ------------->
-    <div class=" is-centered has-text-centered has-background-grey">
-      <br>
-        Footer
-      <br>
-      <br>
-      
-  </div>
 </body>
 
 </html>
