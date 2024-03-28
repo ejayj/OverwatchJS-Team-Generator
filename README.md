@@ -1,32 +1,8 @@
 # OverwatchJS
- Javascript implementation of the overwatchs cript
+This is a team generator for Overwatch made in pure html/js/css. (A javascript implementation of the python overwatch team generator)
 
+#Link
+link: https://ejayj.github.io/OverwatchJS/
 
-
-The javascript notes folder holds the transcription of script.py into script.js; 
-this has been transferred over to htdocs/OverwatchJS folder to get a simple version 
-of this project off the ground and styled.
-
-The intiial project is in OverwatchScript, which holds both python and javascript originals of this project.
-
-Next Todo:
-- Link javascript to HTML [display i/o]
-- Fix final JS issues (blank role issue; call from html if someone has a blank role, then assign them one based on needs of the team)
-- Js: create final team makeup (assigning who plays what based on their given roles: for actual game time)
-- Stylings
-- Publish on render or any other site that will host
-
-
-
-Next project:
- dispatch website (php? how does php talk to json for save data) (tnvac)
-- Overwatch script (python version)
-- Switch spotify api to django, and script to flask?
--------------------------------------------------------
-- Fix minute issues/bugs in code in this order:
-- Overwatch JS, Discord bot, Overwatch Python, Ejay Codies, Python Spotify API
---------------------------------------------------------
-- Create portfolio website
-- Apply to places (should i have something speciifc in my github repo's for applications?)
-========
-- Then build a game!!!
+#About
+The Overwatch Team Generator started as a personal fun project for my friend Jade and I. We often held overwatch tournaments but didn't necessarily have the right tool for the job. With this site, you're able to configure an overwatch team with role parameters, take into account player's rankings for team balancing, and visit a history of your team creations in case you have a team in mind that you really like. You can add or remove players from the list, and you can set as many teams as you like.
