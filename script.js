@@ -889,6 +889,7 @@ if (rank == "Rank" || rank == 0.0) { //if no rank, give random value
 
 
 function validateAddPlayerform() {
+  window.alert()
   let name = document.forms["addPlayerForm"]["name"].value;
   let rank = document.forms["addPlayerForm"]["rank"].value;
   if (name == "") {
@@ -946,7 +947,7 @@ function validateAddPlayerform() {
   let player = new Player(name, roles, rank) 
   add_to_playerpool(player)
   add_to_playerpool(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12)
-  //displayplayerpool()
+  displayplayerpool();
   //printdata
   clearForm()
 }
@@ -1065,15 +1066,15 @@ function clearRejects() {
 
 function HTMLcreateTeams() { //execute and display team creation. Error: not enough players?
   createteams(team_count,team_size);
-  displayrejects();
   displayteams();
+  displayrejects();
   saveData();
 } //also disable until you reach min players?
 
 function HTMLcreateTeams6v6() { //execute and display team creation. Error: not enough players?
   createteams(2,6);
-  displayrejects();
   displayteams();
+  displayrejects();
   saveData();
 }
 
@@ -1172,8 +1173,8 @@ function saveData() {
     rejects: rejects
   };
 
-// Store the object into storage
-localStorage.setItem(today, JSON.stringify(userData));
+  // Store the object into storage
+  localStorage.setItem(today, JSON.stringify(userData));
 
 }
 
