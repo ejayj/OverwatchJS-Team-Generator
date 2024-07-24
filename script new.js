@@ -634,9 +634,67 @@ function choose_random_player(){  // maybe make a clause, if number has already 
 
     let player = playerpool[Math.floor(Math.random()*playerpool.length)] //find random player
     //console.log(player.name)
-    playerpool = playerpool.filter(a => a !== player)//delete player out of playerpool
+    //delete player out of playerpool
     //console.log("playerpool: "+playerpool)
     return player; //should pop a specific index
+}
+
+function deleteplayer_from_playerpool(player){
+  playerpool = playerpool.filter(a => a !== player);
+}
+
+function attempt_add_player(player,temp_availableroles,temp_team) {
+
+  let success=false; //has player been added?
+  let roles=player.queuedroles;
+  
+
+  for (let i=0; i<roles.length;i++) { //iterate through all roles
+
+    let role=roles[i]; 
+    let team_element=[role, player.name]; //e.g. [Support, JOHNDOE]
+
+    switch (role) { 
+      case "Tank":
+        //check if role is available
+        if (temp_availableroles[0]==0) 
+          break;
+
+        //add player to team
+        --temp_availableroles[0];
+        temp_team.push(team_element);
+        success==true;
+        break;
+    
+      case "DPS":
+          //check if role is available
+          if (temp_availableroles[1]==0) 
+            break;
+
+          //add player to team
+          --temp_availableroles[1];
+          temp_team.push(team_element);
+          success==true;
+          break;
+
+    
+      case "Support":
+            //check if role is available
+            if (temp_availableroles[2]==0) 
+              break;
+
+            //add player to team
+            --temp_availableroles[2];
+            temp_team.push(team_element);
+            success==true;
+            break;
+
+      default:
+        break;
+    }
+  }
+
+  return temp_availableroles,temp_team,success;
 }
 
 function create_team(teamid, size=team_size, roleblock=role_lock, maxteams=team_count,rerollamount=0){  // you have to put a team id in!
@@ -644,6 +702,81 @@ function create_team(teamid, size=team_size, roleblock=role_lock, maxteams=team_
   //console.log(playerpool)
     //console.log("playerpool2: "+playerpool2)
     let team = new Team(teamid, size, roleblock)
+
+
+
+    //get 5 random players in a temp array
+    //set available role array [Tank],DPs,DPS,Support or simply variables: dps = 2
+
+    //for each player in array
+      //add solo players first and remove from temp array
+
+    //for each player in array
+      //add double queued players and remove from temp array
+
+    //for each player in array
+      //add all players and remove from temp array
+
+
+    //for every player in temp array, replace them with random player.
+      //if player fits in a role, add player, otherwise role again
+
+    //if available roles = 0, team is full, and remove all players from player pool.
+
+    //add players to team
+
+
+    //at the end, if there are any players left in player pool, set them to rejects.
+
+    //+==========================================
+
+    //get 5 random players in a temp array
+    let temp_random_playerpool = [];
+
+    for (let i = 0; i < size; i++) {
+      let player=choose_random_player();
+      temp_random_playerpool.push(player);
+    }
+
+    //set available role array [Tank],DPs,DPS,Support or simply variables: dps = 2
+    let temp_availableroles=[2,2,2]//Tank,DPS,Support
+    let temp_team=[];
+    if(size == 5) {
+      temp_availableroles[0]=1;
+    }
+
+    //for each player in array
+    for (let i = 0; i < temp_random_playerpool.length; i++) {
+        let player=temp_random_playerpool[i];
+
+        //add solo players first and remove from temp array
+        if (player.queuedroles.length==1) {
+          
+          temp_availableroles,temp_team,success=attempt_add_player(player,temp_availableroles,temp_team);
+
+          //if unsucessful add, do something
+          if (success==false) {
+
+          }
+
+          //if successful remove from player queue?
+          
+        }
+
+    }
+
+    //once its gone through the for loop, for every player in team, remove from player pool.
+    //remove player from pool
+    temp_random_playerpool = temp_random_playerpool.filter(a => a !== player);
+      
+
+    //for each player in array
+      //add double queued players and remove from temp array
+
+    //for each player in array
+      //add all players and remove from temp array
+
+
     for (let i = 0; i < size; i++){ //allows dynamic change of team size in event of player kick
       if (playerpool.length == 0){  // if there's not enough players in player pool, stop
           //console.log("exiting for loop in create_team, ran out of players in pool:(")

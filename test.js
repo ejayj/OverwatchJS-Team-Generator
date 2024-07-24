@@ -36,13 +36,24 @@ class Team {
       this.rolelock = rolelock; // if true, then players will not be added to teams where their specified role is already fulfilled in a team. Set on by default
       this.forcedplayer=0; //a flag for if there are any forced players (but there really shoudlnt be unless the player pool is THAT bad)
       
+      //assining players to roles. 0 means its empty
+      this.support_player_1 = 0; //player that satisfies this role
+      this.support_player_2 = 0; //player that satisfies this role
+      this.dps_player_1 = 0; //player that satisfies this role
+      this.dps_player_2 = 0; //player that satisfies this role
+      this.tank_player_1 = 0; //player that satisfies this role
+
+      if (maxplayers=6) {
+        this.tank_player_2 = 0; //player that satisfies this role
+      }
+      
   }
 
   toString() {
       return "Team" + this.teamid; // toString has to return the string representation
   }
 //this  is not done yet
-  addplayer(PlayerName) { //when it returns none, algo should try to add a different player- maybe with the needs of the team?
+addplayer(PlayerName) { //when it returns none, algo should try to add a different player- maybe with the needs of the team?
     this.playercount=this.playercount+1
     if (this.isteamfull()){ //if the team is full, ERROR
         console.log("ERROR: Max players reached!")  
@@ -536,57 +547,58 @@ class Team {
   //  }
 }
 
-class Player{
-  constructor(name, role=["Tank", "DPS", "Support"], rank=0) {
-    //super().__init__()//how to make this a subclass?
-    this.name = name
-    this.role = role
-    this.rank = rank //i can get this from overwatch?
-    this.queuedroles = [] //these are the roles that the player can queue as for the team
-  }
+// class Player{
+//   constructor(name, role=["Tank", "DPS", "Support"], rank="None") {
+//     //super().__init__()//how to make this a subclass?
+//     this.name = name
+//     this.role = role
+//     this.rank = rank //i can get this from overwatch?
+//     this.queuedroles = [] //these are the roles that the player can queue as for the team
+//     this.assignedrole = "";
+//   }
   
-  toString() {
-    return this.name;
-  }
-}
+//   toString() {
+//     return this.name;
+//   }
+// }
 
-//**************** ABOVE IS TEAMS.PY TRANSLATION  *******************/
+// //**************** ABOVE IS TEAMS.PY TRANSLATION  *******************/
 
-//********* dummy data ******** */
-//1,2,3, 3=best, 1=not so best
-const p1 = new Player("Ejay", ["Tank","DPS", "Support"], 2)  // i could use numbers for roles
-const p2 = new Player("Jade", ["Support"], 3)  // i could use numbers for roles
-const p3 = new Player("Shane", ["Support"], 3)  // i could use numbers for roles
-// i could use numbers for roles
-const p4 = new Player("Meredith", ["Tank"], 2)
-const p5 = new Player("Squilly", ["Tank","DPS"], 1)  // i could use numbers for roles
-const p6 = new Player("Luke", ["Tank","DPS","Support"], 3)  // i could use numbers for roles
-const p7 = new Player("Nick", ["Tank","Support"], 3)  // i could use numbers for roles
-const p8 = new Player("Baj", ["DPS","Support"], 2)  // i could use numbers for roles
-const p9 = new Player("Wanda", ["Support"],1)  // i could use numbers for roles
-// i could use numbers for roles
-const p10 = new Player("Mike", ["DPS"], 2)
-const p11 = new Player("Kyle", ["Tank","Support"], 3)  // i could use numbers for roles
-const p12 = new Player("Moses", ["DPS","Support"], 3)  // i could use numbers for roles
+// //********* dummy data ******** */
+// //1,2,3, 3=best, 1=not so best
+// const p1 = new Player("Ejay", ["Tank","DPS", "Support"], "Diamond")  // i could use numbers for roles
+// const p2 = new Player("Jade", ["Support"], "Silver")  // i could use numbers for roles
+// const p3 = new Player("Shane", ["Support"], "Gold")  // i could use numbers for roles
+// // i could use numbers for roles
+// const p4 = new Player("Meredith", ["Tank"], "Diamond")
+// const p5 = new Player("Squilly", ["Tank","DPS"], "Silver")  // i could use numbers for roles
+// const p6 = new Player("Luke", ["Tank","DPS","Support"], "Gold")  // i could use numbers for roles
+// const p7 = new Player("Nick", ["Tank","Support"], "Diamond")  // i could use numbers for roles
+// const p8 = new Player("Baj", ["DPS","Support"], "Silver")  // i could use numbers for roles
+// const p9 = new Player("Wanda", ["Support"],1)  // i could use numbers for roles
+// // i could use numbers for roles
+// const p10 = new Player("Mike", ["DPS"], "Gold")
+// const p11 = new Player("Kyle", ["Tank","Support"], "Diamond")  // i could use numbers for roles
+// const p12 = new Player("Moses", ["DPS","Support"], "Silver")  // i could use numbers for roles
 
 
-//**************** BELOW IS SCRIPT.PY TRANSLATION  *******************/
-//** global variables */
-var masterplayerpool = []  // this is all players
-var playerpool = []  // these are players who may be popped
-var playerpool2 = []
-// this is left over players, append this to player pool after a team has been created
-var rejects = []  // players who could not be fit into the game with criteria
-var maxteams = 0  // these are how many teams you want to split the player pool into
-var masterdictionary =null
-var teams = []
-var team1 = ""  // fix this to be dynamic later
-var team2 = ""
-var index =0
-var save = []
-var runtime = 0 //how many time program was created
-// console.log(p2)
-// console.log('ok')
+// //**************** BELOW IS SCRIPT.PY TRANSLATION  *******************/
+// //** global variables */
+// var masterplayerpool = []  // this is all players
+// var playerpool = []  // these are players who may be popped
+// var playerpool2 = []
+// // this is left over players, append this to player pool after a team has been created
+// var rejects = []  // players who could not be fit into the game with criteria
+// var maxteams = 0  // these are how many teams you want to split the player pool into
+// var masterdictionary =null
+// var teams = []
+// var team1 = ""  // fix this to be dynamic later
+// var team2 = ""
+// var index =0
+// var save = []
+// var runtime = 0 //how many time program was created
+// // console.log(p2)
+// // console.log('ok')
 
 function add_to_playerpool(...Players) {
   for (let i=0 ; i < Players.length; i++) { //for every player
@@ -638,12 +650,86 @@ function choose_random_player(){  // maybe make a clause, if number has already 
     //console.log("playerpool: "+playerpool)
     return player; //should pop a specific index
 }
-
 function create_team(teamid, size=team_size, roleblock=role_lock, maxteams=team_count,rerollamount=0){  // you have to put a team id in!
   //console.log("player pool1:"+playerpool)
   //console.log(playerpool)
     //console.log("playerpool2: "+playerpool2)
     let team = new Team(teamid, size, roleblock)
+
+
+
+    //get 5 random players in a temp array
+    //set available role array [Tank],DPs,DPS,Support or simply variables: dps = 2
+
+    //for each player in array
+      //add solo players first and remove from temp array
+
+    //for each player in array
+      //add double queued players and remove from temp array
+
+    //for each player in array
+      //add all players and remove from temp array
+
+
+    //for every player in temp array, replace them with random player.
+      //if player fits in a role, add player, otherwise role again
+
+    //if available roles = 0, team is full, and remove all players from player pool.
+
+    //add players to team
+
+
+    //at the end, if there are any players left in player pool, set them to rejects.
+
+    //+==========================================
+
+    //get 5 random players in a temp array
+    let temp_random_playerpool = [];
+
+    for (let i = 0; i < size; i++) {
+      let player=choose_random_player();
+      temp_random_playerpool.push(player);
+    }
+
+    //set available role array [Tank],DPs,DPS,Support or simply variables: dps = 2
+    let temp_availableroles=[2,2,2]//Tank,DPS,Support
+    let temp_team=[];
+    if(size == 5) {
+      temp_availableroles[0]=1;
+    }
+
+    //for each player in array
+    for (let i = 0; i < temp_random_playerpool.length; i++) {
+        let player=temp_random_playerpool[i];
+
+        //add solo players first and remove from temp array
+        if (player.queuedroles.length==1) {
+          
+          temp_availableroles,temp_team,success=attempt_add_player(player,temp_availableroles,temp_team);
+
+          //if unsucessful add, do something
+          if (success==false) {
+
+          }
+
+          //if successful remove from player queue?
+          
+        }
+
+    }
+
+    //once its gone through the for loop, for every player in team, remove from player pool.
+    //remove player from pool
+    temp_random_playerpool = temp_random_playerpool.filter(a => a !== player);
+      
+
+    //for each player in array
+      //add double queued players and remove from temp array
+
+    //for each player in array
+      //add all players and remove from temp array
+
+
     for (let i = 0; i < size; i++){ //allows dynamic change of team size in event of player kick
       if (playerpool.length == 0){  // if there's not enough players in player pool, stop
           //console.log("exiting for loop in create_team, ran out of players in pool:(")
@@ -746,6 +832,183 @@ function create_team(teamid, size=team_size, roleblock=role_lock, maxteams=team_
     return team
 }
 
+function create_team(teamid, size=team_size, roleblock=role_lock, maxteams=team_count,rerollamount=0){ 
+      let team = new Team(teamid, size, roleblock)
+
+      //get 5 random players in a temp array
+      //set available role array [Tank],DPs,DPS,Support or simply variables: dps = 2
+  
+      //for each player in array
+        //add solo players first and remove from temp array
+  
+      //for each player in array
+        //add double queued players and remove from temp array
+  
+      //for each player in array
+        //add all players and remove from temp array
+  
+  
+      //for every player in temp array, replace them with random player.
+        //if player fits in a role, add player, otherwise role again
+  
+      //if available roles = 0, team is full, and remove all players from player pool.
+  
+      //add players to team
+  
+  
+      //at the end, if there are any players left in player pool, set them to rejects.
+  
+      //+==========================================
+  
+      //get 5 random players in a temp array
+      let temp_random_playerpool = [];
+  
+      for (let i = 0; i < size; i++) {
+        let player=choose_random_player();
+        temp_random_playerpool.push(player);
+      }
+  
+      //set available role array [Tank],DPs,DPS,Support or simply variables: dps = 2
+      let temp_availableroles=[2,2,2]//Tank,DPS,Support
+      let temp_team=[];
+      if(size == 5) {
+        temp_availableroles[0]=1;
+      }
+  
+      //for each player in array
+      for (let i = 0; i < temp_random_playerpool.length; i++) {
+          let player=temp_random_playerpool[i];
+  
+          //add solo players first and remove from temp array
+          if (player.queuedroles.length==1) {
+            
+            temp_availableroles,temp_team,success=attempt_add_player(player,temp_availableroles,temp_team);
+  
+            //if unsucessful add, do something
+            if (success==false) {
+  
+            }
+  
+            //if successful remove from player queue?
+            
+          }
+  
+      }
+  
+      //once its gone through the for loop, for every player in team, remove from player pool.
+      //remove player from pool
+      temp_random_playerpool = temp_random_playerpool.filter(a => a !== player);
+        
+  
+      //for each player in array
+        //add double queued players and remove from temp array
+  
+      //for each player in array
+        //add all players and remove from temp array
+  
+  
+      for (let i = 0; i < size; i++){ //allows dynamic change of team size in event of player kick
+        if (playerpool.length == 0){  // if there's not enough players in player pool, stop
+            //console.log("exiting for loop in create_team, ran out of players in pool:(")
+            break
+          }
+  
+        let player = choose_random_player() // save random player (because they are removed now)
+        let outcome = team.addplayer(player)  //outcome will be true upon success or false upon error team full, null for player denied->request new one
+  
+        if(outcome==false) { //if add player returns false then there was an error: team prob full
+          break;
+        }
+  
+        while (outcome == null){ //keeps trying to add a player until it is successful (until outcomr isnt null)
+            if (outcome != null){  // if the outcome wasnt none to begin with, break out of this loop
+              break
+            }
+  
+            // if there's not enough players in player pool, stop. This means some teams may not produce 5
+            if (playerpool.length == 0){
+                break
+            }
+  
+            // if outcome was none, put player into player pool 2 so they are not removed from game
+            if (outcome == null){
+                // saves player back into separate player pool for use just in case
+                //console.log("returned null, pushing: "+player+" to player pool2 \n") //THIS IS VERY IMPORTANT COMMENT
+                playerpool2.push(player)
+            }
+            
+            if (outcome == false && team.players.length<5){
+              //pass;//outcome=null; //encountered error, had to kick a player, dont save them, reroll; continue
+          }
+            player = choose_random_player()  // get new player
+            // otherwise, keep trying to add a player
+            if(player==null){
+              console.log("tried to add a null player: "+player)
+              break;
+            }
+            outcome = team.addplayer(player)
+          }    
+      }
+  
+      // return the reject players back into player pool. (What if they get rejected twice?)
+      // console.log("A: player pool1:")
+      // console.log(""+playerpool)
+  
+      // console.log("B: player pool2:")
+      // console.log(""+playerpool2)
+      playerpool=playerpool.concat(playerpool2)
+  
+      //make sure team isnt null
+      for(let i=0; i<team.players.length;i++){
+        //console.log('we reached here')
+        if(team.players[i]==null || team.players[i]==undefined || team.players[i]=="undefined"){
+          //console.log('we reached here2')
+          console.log("kicking null player: "+team.players[i])
+          team.players= team.players.filter(a => a !== team.players[i]);
+        }
+      }
+  
+     //console.log("team length "+team.players.length);
+      //console.log("team max size: "+size);
+      //console.log("player pool length: "+playerpool.length);
+  
+      if(team.players.length=size) {
+       // console.log("here are the team players (since its 5?: "+team.players)
+      }
+  
+      //PROEBLM: Players are disappearing from player pool, and force add is not adding two players when needed, only one when short. also are there ghost players in a team? its saying of team size 5 when there are only 4 printing out.
+      //OTHER PROBLEM: the below function fails too, because if playerpool is 0, then it wont attempt to force add...
+  
+      if(team.players.length<size && playerpool.length != 0){ //if team is not full, and we have players to choose from. we need to re-roll
+        if(rerollamount>0) { //if this is already our second role push a player anyway, force push a player
+          let player = choose_random_player() // save random player (because they are removed now)
+          result=team.force_addplayer(player)
+          console.log("force adding player "+player.name+" result: "+result)
+        } else { //if reroll amount is not greater than 0 (if its 0), re-reoll and call this function again
+        rerollamount++;
+        create_team(teamid,size,roleblock,maxteams,rerollamount)
+        }
+      }
+  
+      if(teamid == (maxteams-1) ) { //if this is the last team, push whatever player is left? i think the last if statement handles that 
+        //
+      }
+  
+      //BALANCE TEAMS FUNCTION HERE
+  
+      // console.log("final product: " +playerpool)
+      // if player.rejectionamount == self.teamid (depending on how many teams there is, if its team 3 and rejection 3, or team 2 and rejection 2)
+      // or simply, if this is the last iteration of team creation and the player is still in pool...save to rejects list
+  
+      //i can move this below function to createteams function
+      //if (teamid == (maxteams-1)){  // if this is the last team to be created. its maxteams-1 because arrays //start at 0
+      //    checkplayerrejects()  // save rejected players to list called rejects and show to user
+      //    // we want to save rejects even if its null, to stay concurrent with the teams
+      //}
+      teams.push(team)  //saves team
+      return team
+  }
+
 //BALANCE TEAMS FUNCTION HERE
 
 function BalanceTeam() {
@@ -838,7 +1101,7 @@ function printteam(team){//// make a function that returns a team based off id
     var player=team.players[i]// var player=team['players'][i]
     //print(f"{players}, {players.queuedroles}") 
     try {
-    console.log(player.name + ", " + player.queuedroles)// {players.rank}
+    console.log(player.name + ", " + player.role)// {players.rank}
     }
     catch {
       console.log('could not print player '+i)
@@ -933,231 +1196,8 @@ if (rank == "Rank" || rank == 0.0) { //if no rank, give random value
 }
 
 
-function validateAddPlayerform() {
-  //window.alert()
-  let name = document.forms["addPlayerForm"]["name"].value;
-  let rank = document.forms["addPlayerForm"]["rank"].value;
-  if (name == "") {
-    alert("Name must be filled out");
-    return false;
-  }
-
-  if (rank == "Rank" || rank == 0.0) { //if no rank, give random value
-    rank = "None";
-  }
-  
-  // if (role lock = ON ) && all checkboxes are blank, error alert: need to enter a role of turn of roles in the config section
-  //same thing for rank 
-
-  //set roles to an array, and iterate through to see which is true
-  let roles=[];
-  let tank = document.forms["addPlayerForm"]["cb1"].checked;
-  let dps = document.forms["addPlayerForm"]["cb2"].checked;
-  let support = document.forms["addPlayerForm"]["cb3"].checked;
-  let all = document.forms["addPlayerForm"]["cb4"].checked;
-  temproles=[tank,dps,support,all];
-  //alert(temproles)
-
-  for (let i = 0; i<temproles.length;i++) {
-    if(temproles[i]) {
-      switch (i) {
-        case 0:
-          roles.push("Tank")
-          break;
-        case 1:
-          roles.push("DPS")
-          break;
-        case 2:
-          roles.push("Support")
-          break;
-        case 3:
-          roles.push("All")
-          break;
-      }
-    }
-
-    if(i==4 && (roles.length==3 || roles.length==0)) { // on last loop, if all roles are queued or none are, assign all role
-      roles=["All"];
-      console.log('we reach here???')
-    }
-  }
-
-    if (roles.length==0) {
-      roles=["All"];
-    }
-
-  //let words = document.getElementById("playerpool")
-  //words.innerHTML="peepee" //error, this does not display peepee after page loads. ill have to read/save these valuessomewhere? run a server?
-  //alert('player: '+name+' roles: '+roles+ ' rank '+rank)
-  let player = new Player(name, roles, rank) 
-  //add_to_playerpool(player)
-  add_to_playerpool(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12)
-  displayplayerpool();
-  //printdata
-  clearForm()
-}
-
-function printdata() {
-
-  displayplayerpool();
-  displayteams();
-  displayrejects();
-  
-}
-
-function displayplayerpool() {
-  let writing=""
-
-  for (let i = 0; i<playerpool.length;i++) {
-    let player=playerpool[i]["name"]
-    let playervar="'"+player+"'" //var to pass remove from playerpool button 
-    writing=writing+'<a style="color:red;" onclick="remove_from_playerpool('+playervar+')"> x </a><div class="popup"><span>'+player+'</span> <div class="popup-content"><p> Rank: '+playerpool[i]["rank"]+'<br></p></div></div> '+roles_to_img(playerpool[i]["role"])+'</div><br>';
 
 
-    //if ranks are off, dont show ranks on scroll
-  }
-  //if rank is on, append rank
-  //if ra
-
-  //if roles are on, append role
-
-  //write to doc as <td><tr> etc.
-  let words = document.getElementById("playerpool")
-    words.innerHTML=writing
-}
-
-
-function roles_to_img(roles) {  
-  let images='';
-
-  for (let i = 0; i<roles.length;i++) {
-
-    //if there are three roles, just set it to all
-    if (roles.length==3) {
-      return all_img;
-      
-    }
-
-    switch(roles[i]) {
-      case "Tank":
-        images=images+tank_img;
-        break;
-      case "DPS":
-        images=images+dps_img;
-        break;
-      case "Support":
-        images=images+support_img;
-        break;
-      case "A": //this breaks the function for some reason
-        console.log('we reach here:')
-        console.log(roles[i])
-        images=''; //destroy whatever roles are in images
-        images=images+all_img;
-        break;
-      default:
-        images=''; //destroy whatever roles are in images
-        images=images+all_img;
-        break;
-    }
-//new problem, it keeps setting all of the player roles to 'ALL'
-
-    //console.log(images)
-    //images=images+roles[i]+","
-  }
-  return images;
-  //alert(writing)
-
-}
-
-function displayrejects() {
-  let writing=""
-
-  for (let i = 0; i<rejects.length;i++) {
-    let player=rejects[i]["name"]
-    let playervar="'"+player+"'" //var to pass remove from playerpool button 
-    writing=writing+'<div class="popup"><span>'+player+'</span> <div class="popup-content" style="color: black;" ><p> Rank: '+rejects[i]["rank"]+'<br></p></div></div> '+roles_to_img(rejects[i]["role"])+'</div><br>';
-
-
-    //if ranks are off, dont show ranks on scroll
-  }
-  //if rank is on, append rank
-  //if ra
-
-  //if roles are on, append role
-
-  //write to doc as <td><tr> etc.
-  let words = document.getElementById("rejects")
-    words.innerHTML=writing
-}
-
-
-//delete from playerpool
-
-//check data stuff
-
-function clearForm() { //
-  document.getElementById("addPlayerForm").reset();
-}
-
-function clearPlayerPool() {
-  playerpool=[]; //empty player pool
-  document.getElementById("playerpool").innerHTML=""; //reset writing display
-}
-
-function clearRejects() {
-  rejects=[]; //empty player pool
-  document.getElementById("rejects").innerHTML="None"; //reset writing display
-}
-
-function HTMLcreateTeams() { //execute and display team creation. Error: not enough players?
-  createteams(team_count,team_size);
-  displayteams();
-  displayrejects();
-  saveData();
-} //also disable until you reach min players?
-
-function HTMLcreateTeams6v6() { //execute and display team creation. Error: not enough players?
-  createteams(2,6);
-  displayteams();
-  displayrejects();
-  saveData();
-}
-
-function displayteams() {
-//
-  for (let j = 0; j<teams.length;j++) { //iterate through teams
-    var teamid=j+1;
-    for (let i=0; i<teams[j].players.length;i++) { //iterate through each team players
-      html_id="Team"+teamid+"p"+(i+1); //<p id="Team2p1">Player 1</p> creates the id needed. this creates variable ids!!!! or variable variables! variables that chan change and have their name altered and be created
-      // var player=team['players'][i]
-      //print(f"{players}, {players.queuedroles}") 
-      var team = teams[j]
-      try {
-      //console.log(player.name + ", " + player.queuedroles)// {players.rank}
-        var player=team.players[i]
-        var player_name=player.name
-        console.log(player_name)
-        var player_roles=player.role; //team.players[i].queuedroles //player.queuedroles;
-        var player_rank=player.rank;
-        
-        document.getElementById(html_id).innerHTML=('<div class="popup"><span>'+player_name+'</span> <div class="popup-content"><p style="color: black;"> Rank: '+player_rank+' <br> '+roles_to_img(player_roles)+'</p></div></div></div><br>'); 
-        //document.getElementById(html_id).innerHTML=('<div class="popup"><span>'+player_name+'</span> <div class="popup-content"><p> Rank: '+player_rank+' '+roles_to_img(player_roles)+'<br></p></div></div> '+roles_to_img(player_roles)+'</div><br>'); 
-        
-      }
-      catch {
-        console.log('could not print player '+i)
-        //alert('error creating teams: code 0x005');
-        //break;
-      } finally {
-        console.log(html_id);
-      }
-      //how to target specific team?
-      
-  
-    
-    }
-  }
-}
 
 function RandomizeTeams() {
   //teams=[];
@@ -1197,94 +1237,6 @@ function reset_variables() {
   runtime = 0 //how many time program was created
 }
 
-function saveData() {
-  //get time 
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-  var yyyy = today.getFullYear();
-  //var time= today.getHours() + ":" + today.getMinutes() + ":" + String(today.getSeconds()).padStart(2, '0');
-  let time = today.toLocaleString([], {
-    hour: '2-digit',
-    minute: '2-digit'
-    });
-  today = mm + "/" + dd + "/" + yyyy+" - "+time;
-
-  // Create an object
-  const userData = {
-    time: today, //"03282024",
-    teams: teams,
-    playerpool: masterplayerpool,
-    rejects: rejects
-  };
-
-  // Store the object into storage
-  localStorage.setItem(today, JSON.stringify(userData));
-
-}
-
-function readData() {
-  for (i = 0; i < localStorage.length; i++) {
-    x = localStorage.key(i);
-    document.getElementById("Teamhistory").innerHTML += "<option value='"+x+"'>"+x+"</option>";
-    //console.log(x);
-    //console.log();
-  }
-
-}
-
-
-function Check_History_Team_Size(data) { //creates 6v6 or 5v5 teams based on save
-  teams=data["teams"];
-  if (teams[0].players.length==6) { //if 6v6
-    //window.alert('we reach here');
-    document.getElementById("team1").innerHTML=team1_6v6HTML;
-    document.getElementById("team2").innerHTML=team2_6v6HTML;
-  } else { //if 5v5
-    document.getElementById("team1").innerHTML=team1_5v5HTML;
-    document.getElementById("team2").innerHTML=team2_5v5HTML;
-  }
-}
-
-
-function showData() { //how to show 6v6 vs. 5v5 ?
-  //let key="03282024-2:50:42"; //test value 
-  let key=document.forms["historyForm"]["Teamhistory"].value;
-  let data = JSON.parse(localStorage.getItem(key));
-  //console.log(data["teams"]);
-  Check_History_Team_Size(data); //change html to 5v5 or 6v6 size
-
-  teams=data["teams"]
-  playerpool=data["playerpool"]
-  rejects=data["rejects"]
-  printdata();
-  document.getElementById("history_date-time").innerHTML=key;
-}
-//6v6 button?
-//use action listener for the select html
-//use for loop to print the local storage keys, and upon selection it will execute printdata/sow data 
-
-
-
-function toggleContactModal() {
-  document.getElementById("ContactModal").classList.toggle('is-active');
-}
-
-function toggleAboutModal() {
-  document.getElementById("AboutModal").classList.toggle('is-active');
-}
-
-//displayplayerpool()
-//eerytime it adds new player, print the list from add new playters into that div 
-
-//addnewplayer('ejay')
-//console.log(playerpool[0])ow 
-
-//createteams2(2,5) //this will not work right
-//add_to_playerpool(p1,p2,p3,p4,p5,p6,p7)
-//createteams(2,5) //******** */
-//filesave())
-
 
 
 //NEXT TODO:
@@ -1316,12 +1268,486 @@ function toggleAboutModal() {
 
 
 
+//new code ****************************
+//add_to_playerpool(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12)
+
+function choose_random_player2(){  // maybe make a clause, if number has already been chosen, dont choose it again for this instance? theres w ayt od ot his
+    //playerpool=playerpool.split(',');
+    max = playerpool.length-1  // this gives an error sometims, invesitage
+    if (max < 1) { //was: if max<1
+        max=0; //max = 0
+      }
+    //number =  Math.floor((Math.random() * max)); //could do +1 ); for range (1,max)
+    //console.log('player pool')
+    //console.log(playerpool) //for some reason, the player pool array is not working.... hmm 
+    //console.log(playerpool)
+    //console.log(typeof playerpool)
+
+    let player = playerpool[Math.floor(Math.random()*playerpool.length)] //find random player
+    //console.log(player.name)
+    playerpool = playerpool.filter(a => a !== player)//delete player out of playerpool
+    //console.log("playerpool: "+playerpool)
+    return player; //should pop a specific index
+}
+
+function new_create_team() {
+    //get 5 random players in a temp array
+      //set available role array [Tank],DPs,DPS,Support or simply variables: dps = 2
+  
+      //for each player in array
+        //add solo players first and remove from temp array
+  
+      //for each player in array
+        //add double queued players and remove from temp array
+  
+      //for each player in array
+        //add all players and remove from temp array
+  
+  
+      //for every player in temp array, replace them with random player.
+        //if player fits in a role, add player, otherwise role again
+  
+      //if available roles = 0, team is full, and remove all players from player pool.
+  
+      //add players to team
+  
+  
+      //at the end, if there are any players left in player pool, set them to rejects.
+
+        
+}
 
 
-//******************************************************* */
-//HTML VARIABLES //
-const team1_6v6HTML= '<div style="padding:5px;" class="columns is-centered is-mobile"> <div id="t1p1" style="border:1px solid black;" class="auto  column"> <div id="t1p1icon"> <img src="./images/tank.png" width="20px" height="20px"></div><p id="Team1p1">Player 1</p></div><div id="t1p2" style="border:1px solid black;" class="auto column"><div id="t1p2icon"><img src="./images/tank.png" width="20px" height="20px"></div><p id="Team1p2">Player 2</p></div><div id="t1p3" style="border:1px solid black;" class="auto column"><div id="t1p3icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team1p3">Player 3</p></div><div id="t1p4" style="border:1px solid black;" class="auto column"><div id="t1p4icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team1p4">Player 4</p></div><div id="t1p5" style="border:1px solid black;" class="auto column"><div id="t1p5icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team1p5">Player 5</p></div><div id="t1p6" style="border:1px solid black;" class="auto column"><div id="t1p6icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team1p6">Player 6</p></div>';
-const team2_6v6HTML= '<div style="padding:5px;" class="columns is-centered is-mobile"> <div id="t2p1" style="border:1px solid black;" class="auto  column"> <div id="t2p1icon"> <img src="./images/tank.png" width="20px" height="20px"></div><p id="Team2p1">Player 1</p></div><div id="t2p2" style="border:1px solid black;" class="auto column"><div id="t2p2icon"><img src="./images/tank.png" width="20px" height="20px"></div><p id="Team2p2">Player 2</p></div><div id="t2p3" style="border:1px solid black;" class="auto column"><div id="t2p3icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team2p3">Player 3</p></div><div id="t2p4" style="border:1px solid black;" class="auto column"><div id="t2p4icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team2p4">Player 4</p></div><div id="t2p5" style="border:1px solid black;" class="auto column"><div id="t2p5icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team2p5">Player 5</p></div><div id="t2p6" style="border:1px solid black;" class="auto column"><div id="t2p6icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team2p6">Player 6</p></div>';
-const team1_5v5HTML='<div style="padding:5px;" class="columns is-centered is-mobile"><div id="t1p1" style="border:1px solid black;" class="auto  column"><div id="t1p1icon"> <img src="./images/tank.png" width="20px" height="20px"></div><p id="Team1p1">Player 1</p></div><div id="t1p2" style="border:1px solid black;" class="auto column"><div id="t1p2icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team1p2">Player 2</p></div><div id="t1p3" style="border:1px solid black;" class="auto column"><div id="t1p3icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team1p3">Player 3</p></div><div id="t1p4" style="border:1px solid black;" class="auto column"><div id="t1p4icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team1p4">Player 4</p></div><div id="t1p5" style="border:1px solid black;" class="auto column"><div id="t1p5icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team1p5">Player 5</p></div></div>';
-const team2_5v5HTML='<div style="padding:5px;" class="columns is-centered is-mobile"><div id="t2p1" style="border:1px solid black;" class="auto  column"><div id="t2p1icon"> <img src="./images/tank.png" width="20px" height="20px"></div><p id="Team2p1">Player 1</p></div><div id="t2p2" style="border:1px solid black;" class="auto column"><div id="t2p2icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team2p2">Player 2</p></div><div id="t2p3" style="border:1px solid black;" class="auto column"><div id="t2p3icon"><img src="./images/dps.png" width="20px" height="20px"></div><p id="Team2p3">Player 3</p></div><div id="t2p4" style="border:1px solid black;" class="auto column"><div id="t2p4icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team2p4">Player 4</p></div><div id="t2p5" style="border:1px solid black;" class="auto column"><div id="t2p5icon"><img src="./images/support.png" width="20px" height="20px"></div><p id="Team2p5">Player 5</p></div>';
 
+///new code *********
+class TeamTest {
+    constructor(teamid=1, maxplayers=5, rolelock=true) {
+        if (maxplayers < 5){ //if not enough players for min classic role lock play, turn it off
+            rolelock=false }
+        this.teamid= teamid
+        this.maxplayers = maxplayers
+        this.filledroles= [] //lists what roles are filled in this team, if role lock is on
+        this.achievedroles = [] // lists how many spots for each role we have
+        this.rank = 0 // adds the players of all the ranks together
+        this.players = []
+        this.playercount = 0 // how many players are in
+        this.support = 0
+        this.tank = 0
+        this.dps = 0
+        this.rolelock = rolelock; // if true, then players will not be added to teams where their specified role is already fulfilled in a team. Set on by default
+        this.forcedplayer=0; //a flag for if there are any forced players (but there really shoudlnt be unless the player pool is THAT bad)
+        
+        //assining players to roles. 0 means its empty
+        this.support_player_1 = 0; //player that satisfies this role
+        this.support_player_2 = 0; //player that satisfies this role
+        this.dps_player_1 = 0; //player that satisfies this role
+        this.dps_player_2 = 0; //player that satisfies this role
+        this.tank_player_1 = 0; //player that satisfies this role
+  
+        if (maxplayers=6) {
+          this.tank_player_2 = 0; //player that satisfies this role
+        }
+        
+    }
+  
+    toString() {
+        return "Team" + this.teamid; // toString has to return the string representation
+    }
+}
+class Player{
+    constructor(name, role=["Tank", "DPS", "Support"]) {
+      //super().__init__()//how to make this a subclass?
+      this.name = name
+      this.role_queue = role
+      //this.rank = rank //i can get this from overwatch?
+      this.queuedroles = [] //these are the roles that the player can queue as for the team
+      this.assignedrole = null;
+    }
+    
+    toString() {
+      return this.name;
+    }
+
+    canFillRole(role) {
+        //Check if the player has the role in their queue
+        if (this.role_queue.includes(role))
+            // Check if the role is not already assigned to another player in the team
+            if (this.assignedrole == null ||  this.assignedrole == role)
+                return true
+        return false
+
+    }
+  }
+  
+
+  const p1 = new Player("Ejay", ["Tank","DPS", "Support"])  // i could use numbers for roles
+  const p2 = new Player("Jade", ["Support"])  // i could use numbers for roles
+  const p3 = new Player("Shane", ["Support"])  // i could use numbers for roles
+  const p4 = new Player("Meredith", ["Tank"])
+  const p5 = new Player("Squilly", ["Tank","DPS"])  // i could use numbers for roles
+  const p6 = new Player("Luke", ["Tank","DPS","Support"])  // i could use numbers for roles
+  const p7 = new Player("Nick", ["Tank","Support"])  // i could use numbers for roles
+  const p8 = new Player("Baj", ["DPS","Support"])  // i could use numbers for roles
+  const p9 = new Player("Wanda", ["Support"])  // i could use numbers for roles
+  const p10 = new Player("Mike", ["DPS"])
+  const p11 = new Player("Kyle", ["Tank","Support"])  // i could use numbers for roles
+  const p12 = new Player("Moses", ["DPS","Support"])  // i could use numbers for roles
+  
+  var playerpool_test=[p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12];
+  var team1= [];
+  var team2= [];
+  var teams_test=[];
+  var rejects= [];
+
+
+function createteams_recursive(team_count=2,team_size=5,openqueue=false) {
+    //check if valid team size input
+    if(team_size!=5 && team_size!=6)
+        throw "Invalid Team Size";
+
+    //check if we have enough players
+    if( (playerpool_test.length/team_size )< 1) // players/team should be greater than 1. 5/2 is > 1. But 5 players/6 teams is < 1.
+        throw "Not Enough Players For All Teams!";
+    
+
+    //create team
+    let temp_team=createTeam_test(team_size,openqueue);
+
+    //save team
+    teams_test.push(temp_team);
+    //console.log(temp_team); 
+    
+    //check team count
+    if(teams_test.length==team_count)
+        return true //algo completed
+    createteams_recursive(team_count,team_size,openqueue); 
+}
+//later, add functionlity to randomize teams, yet lock some players into a team/role. or to even lock a team, so all other teams will be randomized.
+
+function createTeam_test(team_size, openqueue) {
+    
+    //randomly select this amount of players
+    let team=randomlySelectPlayers(team_size);
+
+    //NOTE: TODO 1
+    assignroles(team,team_size,openqueue);  //does this change team composition?
+
+    if(openqueue) 
+        return team
+
+    return team
+    // //if not open queue, validate team composition 
+    // let runs=0;
+
+    // //NOTE: TODO 2
+    // while ((!isValidTeam(team1) || !isValidTeam(team2) ) && runs<2) { //***problem here. infinite loop
+    //     console.log("adjusting teams "+runs);
+    //     //adjustTeams(playerpool_test, team1, team2, rejects);
+    //     runs++;
+    // }
+
+    //return team1, team2;
+}
+
+function assignroles(team,team_size,openqueue){
+
+    //if openqueue is one
+    if(openqueue){ //assign each player a role in the order they're on the team
+
+        let i=0
+
+        //if team size is 6
+        if(team_size==6) {
+            team[0].assignedrole="Tank"; //add first player as extra tank
+            i=1; //add every subsequent player in regular order
+        }
+
+        team[0+i].assignedrole="Tank";
+        team[1+i].assignedrole="DPS";
+        team[2+i].assignedrole="DPS";
+        team[3+i].assignedrole="Support";
+        team[4+i].assignedrole="Support";
+        return team
+    }
+
+    //openqueue false
+    // let dps=2;
+    // let support=2;
+    // let tank=1;
+    // if(team_size==6)
+    //     tank=2;
+    // for(let i=0;i<team.length;i++) {
+    //     let player = team[i];
+        
+    //     if(player.role_queue.length=1) {
+    //         switch (key) {
+    //             case value:
+                    
+    //                 break;
+            
+    //             default:
+    //                 break;
+    //         }
+    //     }
+    // }
+
+    // return team
+
+    //****************************** */
+    //get 5 random players in a temp array
+    let temp_players=team;
+    //set available role array [Tank],DPs,DPS,Support or simply variables: dps = 2
+    let availableroles=["Tank","DPS","DPS","Support","Support"]; //if for teamsize=6 or dps =2
+    let temp_rejects=[];
+
+    //add solo queued players
+    for(let i=0;i<temp_players.length;i++){
+        let temp_player=temp_players[i];
+        if(temp_player.role_queue.length==1){
+
+            //remove from available role
+            let role=temp_player.role_queue[0];
+            var index = availableroles.indexOf(role);
+            if(index==-1){ //role not available
+                //can't add player
+                //set player to temp rejects
+                temp_rejects.push(temp_player);
+                //remove player from player pool
+                temp_players.splice(i,1);
+                continue;
+            } else { //role available
+                //assign role
+                temp_player.assignedrole=role;
+
+                //take role out of available roles
+                availableroles[index]=temp_player; 
+
+                //take player out of avaialble players
+                temp_players.splice(i,1);
+
+                //maybe do it a different way; compile players by solo queued roles and general roles and pick from role pool instead
+            }
+        }
+    }
+  
+    //add double queued players
+    //for each player in array
+        //add double queued players and remove from temp array
+    //add solo queued players
+    for(let i=0;i<temp_players.length;i++){
+        let temp_player=temp_players[i];
+        if(temp_player.role_queue.length==2){
+
+            //remove from available role
+            let role=temp_player.role_queue[0];
+            var index = availableroles.indexOf(role);
+            if(index==-1){ //role not available
+                //set player to rejects
+                temp_rejects.push(temp_player);
+                //take player out of team/pool
+                temp_players.splice(i,1);
+                continue;
+            } else { //role available
+                //assign role
+                temp_player.assignedrole=role;
+
+                //take role out of available roles
+                availableroles[index]=temp_player; 
+
+                //take player out of avaialble players
+                temp_players.splice(i,1);
+
+                //maybe do it a different way; compile players by solo queued roles and general roles and pick from role pool instead
+            }
+        }
+    }
+  
+    //add "all" queued players
+    //for each player in array
+    //add all players and remove from temp array
+    for(let i=0;i<temp_players.length;i++){
+        let temp_player=temp_players[i];
+        if(temp_player.role_queue.length==3){
+
+            //remove from available role
+            let role=temp_player.role_queue[0];
+            var index = availableroles.indexOf(role);
+            if(index==-1){ //role not available
+                //set player to rejects
+                temp_rejects.push(temp_player);
+                //take player out of team/pool
+                temp_players.splice(i,1);
+                continue;
+            } else { //role available
+                //assign role
+                temp_player.assignedrole=role;
+
+                //take role out of available roles
+                availableroles[index]=temp_player; 
+
+                //take player out of avaialble players
+                temp_players.splice(i,1);
+
+                //maybe do it a different way; compile players by solo queued roles and general roles and pick from role pool instead
+            }
+        }
+    }
+
+    console.log("New Team:");
+    console.log(availableroles);
+
+    console.log("Rejects");
+    console.log(temp_rejects);
+  
+  
+    //for every player in temp array, replace them with random player.
+    //if player fits in a role, add player, otherwise role again
+  
+    //if available roles = 0, team is full, and remove all players from player pool.
+  
+    //add players to team
+  
+  
+    //at the end, if there are any players left in player pool, set them to rejects.
+}
+
+function randomlySelectPlayers(team_size){
+    Shuffle(playerpool_test);
+
+    let team = playerpool_test.splice(0, team_size); 
+
+    //if there are not enough players in player pool to fill another team, then teams have been satisfied and these are the rejects.
+    if(playerpool_test.length<team_size) 
+        rejects= playerpool_test.splice(0, playerpool_test.length); //playerpool_test+1? or -1?
+
+    return team;
+}
+
+function Shuffle(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
+
+function isValidTeam(team){
+    supportCount = countSupportPlayers(team)
+    damageCount = countDamagePlayers(team)
+    tankCount = countTankPlayers(team)
+
+    //return supportCount >= 2 && damageCount >= 2 && tankCount >= 1
+    if (supportCount >= 2 && damageCount >= 2 && tankCount >= 1) //**PROBLEM, WHAT IF WE HAVE 2 PLAYERS DOUBLE QUEUED?? */
+        return true
+    return false;
+
+    //new is valid function:
+//if team comp is bad, try shuffling. if unsuccessful,
+//if we need to swap a player, check player pool first.
+//if player pool is empty, check rejects.
+//if both lists are empty, flag player. (their queueud role was not given, to fix either add players or re-roll team randomizer)
+}
+
+
+
+
+function adjustTeams(){
+    // Adjust teams until they meet the role requirements
+    for (let i=0; i<rejects.length; i++) { //for each player in rejects
+
+        let player = rejects[i];
+
+        if (player.canFillRole("Support") && countSupportPlayers(team1) < 2)
+            movePlayer(player, rejects, team1)
+        else if (player.canFillRole("Support") && countSupportPlayers(team2) < 2)
+            movePlayer(player, rejects, team2)
+        else if (player.canFillRole("DPS") && countDamagePlayers(team1) < 2)
+            movePlayer(player, rejects, team1)
+        else if (player.canFillRole("DPS") && countDamagePlayers(team2) < 2)
+            movePlayer(player, rejects, team2)
+        else if (player.canFillRole("Tank") && countTankPlayers(team1) < 1)
+            movePlayer(player, rejects, team1)
+        else if (player.canFillRole("Tank") && countTankPlayers(team2) < 1)
+            movePlayer(player, rejects, team2) 
+    }
+}
+
+function movePlayer(player, source, destination){
+    // Move player from source list to destination list
+    //source.remove(player)
+    source = source.filter(function(item) {
+        return item !== player
+    });
+    
+    //destination.append(player)
+    destination.push(player);
+}
+
+function countSupportPlayers(team){
+    // Count the number of Support players in the team
+    count = 0
+    for (let i = 0; i<team.length;i++){
+        let player=team[i]; 
+
+        if (player.role_queue.includes('Support'))
+            count++
+    }
+    return count
+}
+
+function countDamagePlayers(team){
+    // Count the number of Support players in the team
+    count = 0
+    for (let i = 0; i<team.length;i++){
+        let player=team[i]; 
+
+        if (player.role_queue.includes('DPS'))
+            count++
+    }
+    return count
+}
+
+function countTankPlayers(team){
+    // Count the number of Support players in the team
+    count = 0
+    for (let i = 0; i<team.length;i++){
+        let player=team[i]; 
+
+        if (player.role_queue.includes('Tank'))
+            count++
+    }
+    return count
+}
+// Similar functions for counting Damage and Tank players
+
+//console.log(teams[0].players)
+//createTeams_test();
+// console.log(team1);
+// console.log(team2);
+createteams_recursive(2,5,false);
+console.log(teams_test);
+console.log(rejects)
+console.log(rejects);
+
+
+// p1 - damage, support
+// p2 - damage
+// p3 - support
+// p4 - tank
+// p5 - tank
+
+// this would pass the valid team be it that there are 2 or more of each role
+// but it would not help
+
+// best method would be to try to create a team, using the less thans <1 and less than <2 method.
+// so what is the problem here? we have a player for which a role is already fulfilled. so we would have to kick them
+// in this instance, we need another player to be damage or support since they each are at one
+// so maybe the way to calculate what players we need is to start at 2, and keep count until roles fulfilled is 0.
+// start with solo queue players, they have priority, then two-queued players, then lastly att third-queued playerds.
+
+
+//TODO:
+//ASSIGN ROLES
+//VALIDATE TEAM
+//CONNECT TO HTML

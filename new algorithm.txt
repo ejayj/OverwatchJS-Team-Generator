@@ -1,0 +1,22 @@
+//get 5 random players in a temp array
+    //set available role array [Tank],DPs,DPS,Support or simply variables: dps = 2
+
+    //for each player in array
+      //add solo players first and remove from temp array
+
+    //for each player in array
+      //add double queued players and remove from temp array
+
+    //for each player in array
+      //add all players and remove from temp array
+
+
+    //for every player in temp array, replace them with random player.
+      //if player fits in a role, add player, otherwise role again
+
+    //if available roles = 0, team is full, and remove all players from player pool.
+
+    //add players to team
+
+
+    //at the end, if there are any players left in player pool, set them to rejects.
